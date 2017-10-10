@@ -5,11 +5,11 @@ if (process.env.DATABASE_URL) {
   db = new Sequelize(process.env.DATABASE_URL);
 } else {
   db = new Sequelize({
-    database: 'qdot',
-    username: 'postgres',
-    password: 'qdot',
+    database: process.env.QDOT_DB_NAME || 'qdot',
+    username: process.env.QDOT_DB_USERNAME || 'postgres',
+    password: process.env.QDOT_DB_PASSWORD || 'postgres',
     dialect: 'postgres',
-    port: 5000
+    port: process.env.QDOT_DB_PORT || 5432
   });
 }
 
