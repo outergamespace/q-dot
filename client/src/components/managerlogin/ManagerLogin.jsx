@@ -26,7 +26,7 @@ class ManagerLogin extends React.Component {
     const { username, password } = this.state;
     const data = { username, password, role };
     const ajaxOptions = {
-      url: '/managerlogin',
+      url: `/managerlogin`,
       method: 'POST',
       data: JSON.stringify(data),
       contentType: 'application/json',
@@ -87,7 +87,7 @@ class ManagerLogin extends React.Component {
           </button>
           <br />
           {
-            this.state.unauthorised 
+            this.state.unauthorised
               && <div className="alert alert-danger"> invalid credentials - please try again! </div>
           }
         </div>

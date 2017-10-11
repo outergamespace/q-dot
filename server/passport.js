@@ -4,7 +4,9 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const dbManagerQuery = require('../controller/manager.js');
 passport.use(new LocalStrategy(
-  function(username, password, done) {
+  { passReqToCallback: true },
+  function(req, username, password, done) {
+    // TODO: verify User role
     dbQuery.getManagerInfo(username)
       .then(user => {
         if (!user) {
@@ -30,4 +32,3 @@ passport.deserializeUser(function(id, done) {
 });
 
 module.exports = passport;
-
