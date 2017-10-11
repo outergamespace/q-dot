@@ -229,8 +229,7 @@ app.post('/manager', (req, res) => {
     if (!req.query.password || !req.query.username) {
       res.sendStatus(400);
     } else {
-      // var passwordInfo = dbManagerQuery.genPassword(req.query.password, util.genSalt());
-      var passwordInfo = dbManagerQuery.genPassword(req.query.password, dbManagerQuery.genSalt());
+      var passwordInfo = dbManagerQuery.genPassword(req.query.password, util.genSalt());
       dbManagerQuery.addManager(req.query.username, passwordInfo.passwordHash, passwordInfo.salt)
         .then(results => res.send(results));
     }
