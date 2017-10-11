@@ -14,6 +14,7 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 const RedisStore = require('connect-redis')(session);
 const passport = require('./passport.js');
+//const yelp = require('../yelp/yelp.js');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
