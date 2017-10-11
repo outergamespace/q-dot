@@ -69,6 +69,10 @@ app.get('/', (req, res) => {
 //get info for one restaurant or all restaurants
 app.get('/restaurants', (req, res) => {
   if (req.query.restaurantId) {
+    yelp.getTempest()
+      .then((yelpInfo) => { console.log('THEN DO STUFF ', yelpInfo); } )
+      .catch((err) => { console.log('errrrrrror: ', err); });
+
     dbQuery.findInfoForOneRestaurant(req.query.restaurantId)
       .then(results => res.send(results))
       .catch(error => {
@@ -76,8 +80,18 @@ app.get('/restaurants', (req, res) => {
         res.send('failed for one restaurant');
       });
     console.log('put yelp here', yelp);
-    yelp.client();
-    yelp.getTempest();
+ /* THIS WORKS
+    yelp.getTempest((yelpResult) => {
+      console.log('HERRRRREEEE: ', yelpResult);
+    });*/
+
+// TypeError: yelp.getTempest.then is not a function
+/*    yelp.getTempest.then(result => {
+      console.log('PPPPpromise: ', result);
+    });*/
+//const yelpPromise = yelp.getTempest();
+
+
   } else {
     dbQuery.findInfoForAllRestaurants()
       .then(restaurants => res.send(restaurants))
