@@ -14,7 +14,7 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 const RedisStore = require('connect-redis')(session);
 const passport = require('./passport.js');
-//const yelp = require('../yelp/yelp.js');
+const yelp = require('../yelp/yelp.js');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
@@ -75,6 +75,9 @@ app.get('/restaurants', (req, res) => {
         console.log('error getting info for one restaurants', error);
         res.send('failed for one restaurant');
       });
+    console.log('put yelp here', yelp);
+    yelp.client();
+    yelp.getTempest();
   } else {
     dbQuery.findInfoForAllRestaurants()
       .then(restaurants => res.send(restaurants))
