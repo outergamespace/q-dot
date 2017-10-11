@@ -193,13 +193,27 @@ app.put('/queues', (req, res) => {
   }
 });
 
+/* CUSTOMER endpoints */
+
+// login a customer for a restaurant
+app.post('/customerlogin', passport.authenticate('local'), (req, res) => {
+  console.log('[CUSTOMER] LOGIN:', req);
+});
+
+app.get('/customerlogout', (req, res) => {
+  console.log('[CUSTOMER] LOGOUT');
+});
+
 //login a manager for a restaurant
+// TODO: now sends down { username, password, role}
 app.post('/managerlogin', passport.authenticate('local'), (req, res) => {
   dbManagerQuery.addAuditHistory('LOGIN', req.user.id)
     .then(results => res.send('/manager'));
 });
 
 //request for logout of manager page of a restaurant
+// TODO: maybe change this to managerlogout or have a shared logout for both
+// manager and customer
 app.get('/logout', (req, res) => {
   dbManagerQuery.addAuditHistory('LOGOUT', req.user.id)
     .then(results => {
@@ -285,4 +299,3 @@ const socketUpdateManager = (restaurantId) => {
     io.to(managerMap[restaurantId]).emit('update', 'queue changed');
   }
 };
-
