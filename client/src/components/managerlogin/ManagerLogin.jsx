@@ -87,11 +87,8 @@ class ManagerLogin extends React.Component {
           </button>
           <br />
           {
-            this.state.unauthorised ?
-              <div className="alert alert-danger">
-              invalid credentials - please try again!
-              </div>
-              : null
+            this.state.unauthorised 
+              && <div className="alert alert-danger"> invalid credentials - please try again! </div>
           }
         </div>
 
