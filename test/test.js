@@ -5,7 +5,7 @@ const dummyData = require('../database/dummydata.js');
 const db = require('../database/index.js');
 const serverURL = 'http://127.0.0.1:1337';
 
-describe ('Restaurant API routes', function() {
+xdescribe ('Restaurant API routes', function() {
   //drops database and recreates a new one with dummy data
   before(function() {
     return db.Queue.drop()
