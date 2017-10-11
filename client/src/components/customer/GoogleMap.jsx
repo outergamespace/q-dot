@@ -1,22 +1,6 @@
 import React, { Component } from 'react';
-import GoogleMapReact from 'google-map-react'; // https://github.com/istarkov/google-map-react
- // I placed the API key in a script tag within the index.html page
-const greatPlaceStyle = {
-  position: 'absolute',
-  width: 40,
-  height: 40,
-  left: -20,
-  top: -20,
-  border: '5px solid #f44336',
-  borderRadius: 40,
-  backgroundColor: 'white',
-  textAlign: 'center',
-  color: '#3f51b5',
-  fontSize: 16,
-  fontWeight: 'bold',
-  padding: 4
-};
-// The google-map-react library allows components to be placed inside the GoogleMapReact component
+import GoogleMapReact from 'google-map-react';
+
 const Pickup = ({ text }) => <div >{text}</div>;
 
 export default class GoogleMap extends Component {
@@ -36,12 +20,12 @@ export default class GoogleMap extends Component {
   render() {
     return (
 
-				<div style={{width: 800, height: 640, display: "block", margin: "auto"}} >
+				<div className="restaurant-map" >
 		      <GoogleMapReact
 						onClick={this._onClick}
 		        center={this.state.center}
 		        zoom={this.state.zoom}
-						size={{width:300, height:400}}
+						// size={{width:300, height:100}}
 						resetBoundsOnResize = {true}
 						// layerTypes={['TrafficLayer']}
 		      >
