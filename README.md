@@ -1,6 +1,6 @@
 <p align="center"><img src="/documentation/images/logo.png" height="25%" width="25%" ></p>
 
-# q.
+# q. [![Build Status](https://travis-ci.org/outergamespace/q-dot.svg?branch=develop)](https://travis-ci.org/outergamespace/q-dot)
 
 An exploration into full-stack web engineering and project management, based on a restaurant's queue management system.
 
