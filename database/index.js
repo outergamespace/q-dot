@@ -21,36 +21,36 @@ db.authenticate()
     console.error('Unable to connect to the database:', err);
   });
 
-// // User Schema
-// const User = db.define('user', {
-//   id: {
-//     type: Sequelize.INTEGER,
-//     primaryKey: true,
-//     autoIncrement: true
-//   },
-//   username: Sequelize.STRING,
-//   passwordHash: Sequelize.STRING,
-//   passwordSalt: Sequelize.STRING,
-//   role: Sequelize.ENUM('manager', 'customer')
-// });
-//
-// // UserProfile Schema
-// const UserProfile = db.define('userprofile', {
-//   id: {
-//     type: Sequelize.INTEGER,
-//     primaryKey: true,
-//     autoIncrement: true
-//   },
-//   // name: Sequelize.STRING,
-//   firstName: Sequelize.STRING,
-//   lastName: Sequelize.STRING,
-//   mobile: {
-//     type: Sequelize.STRING,
-//     unique: true,
-//     allowNull: false
-//   },
-//   email: Sequelize.STRING
-// });
+// User Schema
+const User = db.define('user', {
+  id: {
+    type: Sequelize.INTEGER,
+    primaryKey: true,
+    autoIncrement: true
+  },
+  username: Sequelize.STRING,
+  passwordHash: Sequelize.STRING,
+  passwordSalt: Sequelize.STRING,
+  role: Sequelize.ENUM('manager', 'customer')
+});
+
+// UserProfile Schema
+const UserProfile = db.define('userprofile', {
+  id: {
+    type: Sequelize.INTEGER,
+    primaryKey: true,
+    autoIncrement: true
+  },
+  // name: Sequelize.STRING,
+  firstName: Sequelize.STRING,
+  lastName: Sequelize.STRING,
+  mobile: {
+    type: Sequelize.STRING,
+    unique: true,
+    allowNull: false
+  },
+  email: Sequelize.STRING
+});
 
 //Manager Audit History Schema
 const ManagerAudit = db.define('manageraudit', {
@@ -135,8 +135,8 @@ const Restaurant = db.define('restaurant', {
 });
 
 // Relationship between User and UserProfile
-// User.hasOne(UserProfile);
-// UserProfile.belongsTo(User);
+User.hasOne(UserProfile);
+UserProfile.belongsTo(User);
 
 // Relationship between Restaurant & Queue
 Restaurant.hasMany(Queue);
@@ -158,8 +158,8 @@ Customer.sync()
 module.exports = {
   Sequelize: Sequelize,
   db: db,
-  // User: User,
-  // UserProfile: UserProfile,
+  User: User,
+  UserProfile: UserProfile,
   Customer: Customer,
   Queue: Queue,
   Restaurant: Restaurant,

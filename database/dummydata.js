@@ -1,6 +1,6 @@
 const db = require('./index.js');
 const dbQuery = require('../controller/index.js');
-// const dbUserController = require('../controller/user.js');
+const dbUserController = require('../controller/user.js');
 
 const addToQueue = () => {
   return dbQuery.addToQueue({name: 'Tiffany', restaurantId: 1, size: 2, mobile: '4158475697'})
@@ -31,29 +31,35 @@ const addManager = () => {
   });
 };
 
-// const addUsers = () => {
-//   // return dbUserController.addUser(
-//   //   'lam',
-//   //   'b83b115e06da6c88b745873ebb2cfc5677e68b5bdc83d3e221feb32ad4ea33dc7326122e64ac67792bd911507a7f0658bc2962f0c9d656cf810656af98e87eb5',
-//   //   '8162531bb95b0ff39b8cfdd761642748',
-//   //   'manager'
-//   // ).then(
-//   //   'customer1',
-//   //   '24a41efa18fb5e14f8d897f716fb7ab3d72386bdaaf8e42f0bbddd8234247076cbcbccb68d26b68a4681688c903bb22bca15f3cd1a911c004edc718c3cd531da',
-//   //   '430f3e23151708e8116ba7b4bac693b7',
-//   //   'customer'
-//   // ).then(
-//   //   'customer2',
-//   //   '05fcd24f6b65883c3f44050e68edb0edb8bd217be3e324208f445f929cfcbfd03d09e84f7f6993fd208725c5102fa2281bd59d4560d83c07adddc05bdaf6255b',
-//   //   '35284da54c7c78b6b722eb2af82321c0',
-//   //   'customer'
-//   // ).then(
-//   //   'customer3',
-//   //   '23a98fb2abbd035b42977222c6d4978eb077a77fe34c06b855fe19fcaa74b97981ceac9cb53ef6798d6bdf632ffb9677debcfb25cb753db35214f025758aaba1',
-//   //   '15784eacee916913532b9833ecd0b7d9',
-//   //   'customer'
-//   // );
-// };
+const addUsers = () => {
+  return dbUserController.addUser(
+    'lam',
+    'b83b115e06da6c88b745873ebb2cfc5677e68b5bdc83d3e221feb32ad4ea33dc7326122e64ac67792bd911507a7f0658bc2962f0c9d656cf810656af98e87eb5',
+    '8162531bb95b0ff39b8cfdd761642748',
+    'manager'
+  ).then(
+    dbUserController.addUser(
+      'customer1',
+      '24a41efa18fb5e14f8d897f716fb7ab3d72386bdaaf8e42f0bbddd8234247076cbcbccb68d26b68a4681688c903bb22bca15f3cd1a911c004edc718c3cd531da',
+      '430f3e23151708e8116ba7b4bac693b7',
+      'customer'
+    )
+  ).then(
+    dbUserController.addUser(
+      'customer2',
+      '05fcd24f6b65883c3f44050e68edb0edb8bd217be3e324208f445f929cfcbfd03d09e84f7f6993fd208725c5102fa2281bd59d4560d83c07adddc05bdaf6255b',
+      '35284da54c7c78b6b722eb2af82321c0',
+      'customer'
+    )
+  ).then(
+    dbUserController.addUser(
+      'customer3',
+      '23a98fb2abbd035b42977222c6d4978eb077a77fe34c06b855fe19fcaa74b97981ceac9cb53ef6798d6bdf632ffb9677debcfb25cb753db35214f025758aaba1',
+      '15784eacee916913532b9833ecd0b7d9',
+      'customer'
+    )
+  );
+};
 
 const dropDB = () => {
   return db.Queue.drop()
@@ -61,14 +67,19 @@ const dropDB = () => {
     .then(() => db.Restaurant.drop())
     .then(() => db.ManagerAudit.drop())
     .then(() => db.Manager.drop())
+    .then(() => db.UserProfile.drop())
+    .then(() => db.User.drop())
     .then(() => db.Restaurant.sync({force: true}))
     .then(() => db.Customer.sync({force: true}))
     .then(() => db.Queue.sync({force: true}))
     .then(() => db.Manager.sync({force: true}))
     .then(() => db.ManagerAudit.sync({force: true}))
+    .then(() => db.User.sync({force: true}))
+    .then(() => db.UserProfile.sync({force: true}))
     .then(() => addRestaurants())
     .then(() => addToQueue())
-    .then(() => addManager());
+    .then(() => addManager())
+    .then(() => addUsers());
 };
 
 module.exports = {
