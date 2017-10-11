@@ -1,6 +1,7 @@
 const crypto = require('crypto');
 const db = require('../database/index.js');
 
+// TODO: Remove the crypto stuff and use util instead
 const genSalt = function() {
   return crypto.randomBytes(16).toString('hex');
 };

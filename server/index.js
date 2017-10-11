@@ -5,6 +5,7 @@ const io = require('socket.io')(server);
 const path = require('path');
 const port = process.env.PORT || 1337;
 const db = require('../database/index.js');
+const util = require('../controller/util.js');
 const dbQuery = require('../controller/index.js');
 const dbManagerQuery = require('../controller/manager.js');
 const dummyData = require('../database/dummydata.js');
@@ -197,7 +198,7 @@ app.put('/queues', (req, res) => {
 
 // login a customer for a restaurant
 app.post('/customerlogin', passport.authenticate('local'), (req, res) => {
-  console.log('[CUSTOMER] LOGIN:', req);
+  console.log('[CUSTOMER] LOGIN:', req.body);
 });
 
 app.get('/customerlogout', (req, res) => {
@@ -228,7 +229,7 @@ app.post('/manager', (req, res) => {
     if (!req.query.password || !req.query.username) {
       res.sendStatus(400);
     } else {
-      var passwordInfo = dbManagerQuery.genPassword(req.query.password, dbManagerQuery.genSalt());
+      var passwordInfo = dbManagerQuery.genPassword(req.query.password, util.genSalt());
       dbManagerQuery.addManager(req.query.username, passwordInfo.passwordHash, passwordInfo.salt)
         .then(results => res.send(results));
     }
