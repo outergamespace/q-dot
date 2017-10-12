@@ -21,7 +21,7 @@ import GoogleMapReact from 'google-map-react';
 // pulling png from internet, local dir not working
 const Marker = ({ text }) => <div><img src="http://maps.google.com/mapfiles/kml/paddle/red-circle.png"/>{text}</div>;
 
-export default class GoogleMap extends Component {
+export default class RestaurantsMap extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -37,8 +37,8 @@ export default class GoogleMap extends Component {
 
   render() {
     return (
-				<div className="restaurant-map" >
- 					<GoogleMapReact
+      <div className="restaurant-map" >
+ 				<GoogleMapReact
 						onClick={this._onClick}
 		        center={this.state.center}
 		        zoom={this.state.zoom}
