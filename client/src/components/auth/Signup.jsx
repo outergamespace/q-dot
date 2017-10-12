@@ -28,23 +28,28 @@ class Signup extends React.Component {
   }
 
   submitHandler() {
-    const { firstName, lastName, phone, email } = this.state;
-    const data = { firstName, lastName, phone, email };
-    const ajaxOptions = {
-      url: '/customer-signup',
-      method: 'POST',
-      data: JSON.stringify(data),
-      contentType: 'application/json',
-      success: (redirectPath) => {
-        console.log('Successfully signed up');
-        window.location.replace(redirectPath);
-      },
-      error: (err) => {
-        console.log('Error:', err);
-        this.setState({ errMsg: err.message });
-      }
-    };
-    $.ajax(ajaxOptions);
+    const { username, password, passwordConfirm, firstName, lastName, phone, email } = this.state;
+
+    if (password !== passwordConfirm) {
+      this.setState({ errMsg: 'Passwords do not match'});
+    } else {
+      const data = { username, password, firstName, lastName, phone, email };
+      const ajaxOptions = {
+        url: '/customer-signup',
+        method: 'POST',
+        data: JSON.stringify(data),
+        contentType: 'application/json',
+        success: (redirectPath) => {
+          console.log('Successfully signed up');
+          window.location.replace(redirectPath);
+        },
+        error: (err) => {
+          console.log('Error:', err);
+          this.setState({ errMsg: err.message });
+        }
+      };
+      $.ajax(ajaxOptions);
+    }
   }
 
   validateInput(field) {
