@@ -9,7 +9,8 @@ if (process.env.DATABASE_URL) {
     username: process.env.QDOT_DB_USERNAME || 'postgres',
     password: process.env.QDOT_DB_PASSWORD || 'postgres',
     dialect: 'postgres',
-    port: process.env.QDOT_DB_PORT || 5432
+    port: process.env.QDOT_DB_PORT || 5432,
+    logging: false,
   });
 }
 
