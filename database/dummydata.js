@@ -85,7 +85,17 @@ const addUserProfiles = (firstName, lastName, mobile, email) => {
 };
 
 const addUserAndUserProfile = (username, passwordHash, passwordSalt, role, firstName, lastName, mobile, email) => {
-  return dbUserController.addUserAndUserProfile(
+  // return dbUserController.addUserAndUserProfile(
+  //   'customer1',
+  //   '24a41efa18fb5e14f8d897f716fb7ab3d72386bdaaf8e42f0bbddd8234247076cbcbccb68d26b68a4681688c903bb22bca15f3cd1a911c004edc718c3cd531da',
+  //   '430f3e23151708e8116ba7b4bac693b7',
+  //   'customer',
+  //   'Customer',
+  //   'One',
+  //   '5551234567',
+  //   'customer.one@email.com'
+  // );
+  const addCustomerOne = dbUserController.addUserAndUserProfile(
     'customer1',
     '24a41efa18fb5e14f8d897f716fb7ab3d72386bdaaf8e42f0bbddd8234247076cbcbccb68d26b68a4681688c903bb22bca15f3cd1a911c004edc718c3cd531da',
     '430f3e23151708e8116ba7b4bac693b7',
@@ -95,6 +105,28 @@ const addUserAndUserProfile = (username, passwordHash, passwordSalt, role, first
     '5551234567',
     'customer.one@email.com'
   );
+  const addCustomerTwo = dbUserController.addUserAndUserProfile(
+    'customer2',
+    '05fcd24f6b65883c3f44050e68edb0edb8bd217be3e324208f445f929cfcbfd03d09e84f7f6993fd208725c5102fa2281bd59d4560d83c07adddc05bdaf6255b',
+    '35284da54c7c78b6b722eb2af82321c0',
+    'customer',
+    'Customer',
+    'Two',
+    '5552222222',
+    'customer.two@email.com'
+  );
+  const addCustomerThree = dbUserController.addUserAndUserProfile(
+    'customer3',
+    '23a98fb2abbd035b42977222c6d4978eb077a77fe34c06b855fe19fcaa74b97981ceac9cb53ef6798d6bdf632ffb9677debcfb25cb753db35214f025758aaba1',
+    '15784eacee916913532b9833ecd0b7d9',
+    'customer',
+    'Customer',
+    'Three',
+    '5553333333',
+    'customer.three@email.com'
+  );
+  let promises = [ addCustomerOne, addCustomerTwo, addCustomerThree ];
+  return Promise.all(promises);
 };
 
 const dropDB = () => {
