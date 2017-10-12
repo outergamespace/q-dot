@@ -5,6 +5,7 @@ const io = require('socket.io')(server);
 const path = require('path');
 const port = process.env.PORT || 1337;
 const db = require('../database/index.js');
+const util = require('../controller/util.js');
 const dbQuery = require('../controller/index.js');
 const dbManagerQuery = require('../controller/manager.js');
 const dummyData = require('../database/dummydata.js');
@@ -193,13 +194,27 @@ app.put('/queues', (req, res) => {
   }
 });
 
+/* CUSTOMER endpoints */
+
+// login a customer for a restaurant
+app.post('/customerlogin', passport.authenticate('local'), (req, res) => {
+  console.log('[CUSTOMER] LOGIN:', req.body);
+});
+
+app.get('/customerlogout', (req, res) => {
+  console.log('[CUSTOMER] LOGOUT');
+});
+
 //login a manager for a restaurant
+// TODO: now sends down { username, password, role}
 app.post('/managerlogin', passport.authenticate('local'), (req, res) => {
   dbManagerQuery.addAuditHistory('LOGIN', req.user.id)
     .then(results => res.send('/manager'));
 });
 
 //request for logout of manager page of a restaurant
+// TODO: maybe change this to managerlogout or have a shared logout for both
+// manager and customer
 app.get('/logout', (req, res) => {
   dbManagerQuery.addAuditHistory('LOGOUT', req.user.id)
     .then(results => {
@@ -214,7 +229,7 @@ app.post('/manager', (req, res) => {
     if (!req.query.password || !req.query.username) {
       res.sendStatus(400);
     } else {
-      var passwordInfo = dbManagerQuery.genPassword(req.query.password, dbManagerQuery.genSalt());
+      var passwordInfo = dbManagerQuery.genPassword(req.query.password, util.genSalt());
       dbManagerQuery.addManager(req.query.username, passwordInfo.passwordHash, passwordInfo.salt)
         .then(results => res.send(results));
     }
@@ -285,4 +300,3 @@ const socketUpdateManager = (restaurantId) => {
     io.to(managerMap[restaurantId]).emit('update', 'queue changed');
   }
 };
-

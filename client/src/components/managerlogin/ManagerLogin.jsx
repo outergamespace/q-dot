@@ -9,26 +9,27 @@ class ManagerLogin extends React.Component {
       password: '',
       unauthorised: false
     };
+
+    /* METHOD BINDING */
+    this.updateInputFields = this.updateInputFields.bind(this);
+    this.submitHandler = this.submitHandler.bind(this);
   }
 
   updateInputFields(event, field) {
-    if (field === 'username') {
-      this.setState({
-        username: event.target.value
-      });
-    } else {
-      this.setState({
-        password: event.target.value
-      });
-    }
+    this.setState({
+      [field]: event.target.value
+    });
   }
 
-  submitHandler(event) {
-    event.preventDefault();
+  submitHandler(role) {
     var self = this;
-    $.ajax({
-      url: `/managerlogin?username=${this.state.username}&password=${this.state.password}`,
+    const { username, password } = this.state;
+    const data = { username, password, role };
+    const ajaxOptions = {
+      url: `/managerlogin`,
       method: 'POST',
+      data: JSON.stringify(data),
+      contentType: 'application/json',
       success: (data) => {
         self.setState({
           unauthorised: false
@@ -44,14 +45,15 @@ class ManagerLogin extends React.Component {
             unauthorised: true
           });
         }
-      }
-    });
+      },
+    };
+    $.ajax(ajaxOptions);
   }
 
   render() {
     return (
       <div className='container'>
-        <form className='form-signin' onSubmit={this.submitHandler.bind(this)}>
+        <div className='form-signin'>
           <h2 className='form-signin-heading'>Please sign in</h2>
           <label className='sr-only'>Email address</label>
           <input
@@ -71,16 +73,24 @@ class ManagerLogin extends React.Component {
             required
             onChange={(e) => this.updateInputFields(e, 'password')}
           />
-          <button className='btn btn-lg btn-primary btn-block' type='submit'>Sign in</button>
+          <button
+            className='btn btn-lg btn-primary btn-block'
+            onClick={() => this.submitHandler('customer')}
+          >
+            Log in as Customer
+          </button>
+          <button
+            className='btn btn-lg btn-primary btn-block'
+            onClick={() => this.submitHandler('manager')}
+          >
+            Log in as Manager
+          </button>
           <br />
           {
-            this.state.unauthorised ?
-              <div className="alert alert-danger">
-              invalid credentials - please try again!
-              </div>
-              : null
+            this.state.unauthorised
+              && <div className="alert alert-danger"> invalid credentials - please try again! </div>
           }
-        </form>
+        </div>
 
       </div>
     );
