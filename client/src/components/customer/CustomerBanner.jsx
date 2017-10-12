@@ -23,7 +23,7 @@ const CustomerBanner = (props) => {
       </div>
      <div className="date-container">
        <p className="date-info">Today is {date_now}</p>
-      </div>
+     </div>
     </div>
   )
 };

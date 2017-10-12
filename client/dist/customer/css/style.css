@@ -3,4 +3,32 @@
 	height: 480px;
 	display: block;
 	margin: auto;
+	padding: 15px;
 }
+
+.nav-bar {
+  background-color: #053C5E;
+  display: block;
+  padding: 8px;
+}
+
+.select {
+  margin-left: 3px;
+  padding: 7px;
+  font-family: Roboto, Helvetica Neue, sans-serif;
+  font-size: 18px;
+  color: #fff;
+  font-weight: bold;
+  line-height: 1;
+}
+
+.unselect {
+  margin-left: 3px;
+  padding: 7px;
+  font-family: Roboto, Helvetica Neue, sans-serif;
+  font-size: 18px;
+  color: #fff;
+  font-weight: 200;
+  line-height: 1;
+}
+
