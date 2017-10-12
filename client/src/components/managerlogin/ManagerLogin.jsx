@@ -26,7 +26,7 @@ class ManagerLogin extends React.Component {
     const { username, password } = this.state;
     const data = { username, password, role };
     const ajaxOptions = {
-      url: `/managerlogin`,
+      url: `/${role}login`,
       method: 'POST',
       data: JSON.stringify(data),
       contentType: 'application/json',

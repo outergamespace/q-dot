@@ -120,6 +120,15 @@ const addToQueue = (params) => {
     });
 };
 
+// get info for one User
+const getUserInfo = (username) => {
+  return db.User.findOne({
+    where: {
+      username: username
+    }
+  });
+};
+
 // get queue info for one customer
 const getCustomerInfo = (queueId) => {
   return db.Queue.findOne({
@@ -164,6 +173,7 @@ module.exports = {
   addToQueue: addToQueue,
   updateRestaurantStatus: updateRestaurantStatus,
   getQueueInfo: getQueueInfo,
+  getUserInfo: getUserInfo,
   getCustomerInfo: getCustomerInfo,
   getManagerInfo: getManagerInfo,
   removeFromQueue: removeFromQueue
