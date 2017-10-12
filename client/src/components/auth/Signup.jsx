@@ -126,10 +126,7 @@ class Signup extends React.Component {
             onChange={(e) => this.updateInputFields(e, 'email')}
           />
           <br />
-          {
-            this.state.unauthorised
-              && <div className="alert alert-danger"> invalid credentials - please try again! </div>
-          }
+          {errMsg && <div className="alert alert-danger">{errMsg}</div>}
           <button
             className='btn btn-lg btn-primary btn-block'
             onClick={this.submitHandler}
