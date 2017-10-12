@@ -8,6 +8,7 @@ const db = require('../database/index.js');
 const util = require('../controller/util.js');
 const dbQuery = require('../controller/index.js');
 const dbManagerQuery = require('../controller/manager.js');
+const dbUserQuery = require('../controller/user.js');
 const dummyData = require('../database/dummydata.js');
 const helpers = require('../helpers/helpers.js');
 const bodyParser = require('body-parser');
@@ -240,6 +241,26 @@ app.post('/customerlogin', passport.authenticate('local', { successRedirect: '/c
 
 app.get('/customerlogout', (req, res) => {
   console.log('[CUSTOMER] LOGOUT');
+});
+
+// signup a user for the service
+app.post('/customersignup', (req, res) => {
+  console.log('[CUSTOMER] SIGNUP', req.body);
+  const userFormData = req.body;
+  const passwordInfo = util.genPassword(userFormData.password, util.genSalt());
+  // TODO: need a good place to set a const variable for this the 'customer' string value
+  const role = 'customer';
+  dbUserQuery.addUserAndUserProfile(
+    userFormData.username,
+    passwordInfo.passwordHash,
+    passwordInfo.salt,
+    role,
+    userFormData.firstName,
+    userFormData.lastName,
+    userFormData.phone,
+    userFormData.email
+  );
+  res.send();
 });
 
 //login a manager for a restaurant
