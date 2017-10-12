@@ -8,7 +8,8 @@ const clientSecret = 'Ve4uyDTxV5bPijU2T9zqJE5lmn7IXgprrQyih5IsX8ruOmaJZyBra4gxsc
 /*term, string, restaurant name
 location string, 'city, stateAbbreviation(all lower case)'
 Example:  yelp.search('Tsunami Panhandle', 'san francisco, ca')
-Used to lookup ids.  Can also use later if search feature added*/
+Used to lookup ids.  Can also use later if search feature added
+returns a promise with the first result and also logs the first result*/
 yelp.search = function(term, location) {
   const searchRequest = {
     term: term,
@@ -34,7 +35,7 @@ yelp.search = function(term, location) {
 yelp.getRestaurant = function(qdotRestaurantID) {
 
 // map db ids to yelp ids
-const idConvertDBtoYelp = {
+  const idConvertDBtoYelp = {
     1: 'tempest-san-francisco',
     2: 'house-of-prime-rib-san-francisco',
     3: 'tsunami-panhandle-san-francisco-2',
@@ -57,16 +58,5 @@ const idConvertDBtoYelp = {
     console.log(e);
   });
 };
-/*yelp.search('Tsunami Panhandle', 'san francisco, ca')
-yelp.search('farmhouse kitchen', 'san francisco, ca')
-yelp.search('limon rotisserie', 'san francisco, ca')*/
-/*Client ID = IegpwpbBcI3JTyStfEbLQg
-Client Secret = Ve4uyDTxV5bPijU2T9zqJE5lmn7IXgprrQyih5IsX8ruOmaJZyBra4gxscqg04VO
 
-Access Token = {
-    "access_token": "N-TVvEeZI96fdeyErSqnPNvC4GGP3OcOq81-2PyT2j6WhyD5eO1k5AGBKnEtyP9dIzGDzF5ecTvC0ucxjEZAwkP5VqL1okymTNwoiM4UHEFKf0KFhrrkSble2ZPdWXYx",
-    "expires_in": 639790117,
-    "token_type": "Bearer"
-}*/
-
-module.exports = yelp
+module.exports = yelp;
