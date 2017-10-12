@@ -85,16 +85,6 @@ const addUserProfiles = (firstName, lastName, mobile, email) => {
 };
 
 const addUserAndUserProfile = (username, passwordHash, passwordSalt, role, firstName, lastName, mobile, email) => {
-  // return dbUserController.addUserAndUserProfile(
-  //   'customer1',
-  //   '24a41efa18fb5e14f8d897f716fb7ab3d72386bdaaf8e42f0bbddd8234247076cbcbccb68d26b68a4681688c903bb22bca15f3cd1a911c004edc718c3cd531da',
-  //   '430f3e23151708e8116ba7b4bac693b7',
-  //   'customer',
-  //   'Customer',
-  //   'One',
-  //   '5551234567',
-  //   'customer.one@email.com'
-  // );
   const addCustomerOne = dbUserController.addUserAndUserProfile(
     'customer1',
     '24a41efa18fb5e14f8d897f716fb7ab3d72386bdaaf8e42f0bbddd8234247076cbcbccb68d26b68a4681688c903bb22bca15f3cd1a911c004edc718c3cd531da',

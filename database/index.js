@@ -137,18 +137,7 @@ const Restaurant = db.define('restaurant', {
 });
 
 // Relationship between User and UserProfile
-// User.hasOne(UserProfile);
-// UserProfile.belongsTo(User);
-
-// possibly the right way, but adds are not associating the foreign key properly
 User.UserProfile = UserProfile.belongsTo(User);
-
-// User.hasOne(UserProfile);
-
-// Product.User = Product.belongsTo(User);
-// User.Addresses = User.hasMany(Address);;
-// User.UserProfile = UserProfile.belongsTo(User);
-// User.hasOne(UserProfile);
 
 // Relationship between Restaurant & Queue
 Restaurant.hasMany(Queue);
