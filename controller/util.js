@@ -16,5 +16,5 @@ const genPassword = function(password, salt) {
 
 module.exports = {
   genSalt: genSalt,
-  getPassword: genPassword,
+  genPassword: genPassword,
 };
