@@ -197,8 +197,9 @@ app.put('/queues', (req, res) => {
 /* CUSTOMER endpoints */
 
 // login a customer for a restaurant
-app.post('/customerlogin', passport.authenticate('local'), (req, res) => {
+app.post('/customerlogin', passport.authenticate('local', { successRedirect: '/customer' }), (req, res) => {
   console.log('[CUSTOMER] LOGIN:', req.body);
+  res.redirect('/customer');
 });
 
 app.get('/customerlogout', (req, res) => {
