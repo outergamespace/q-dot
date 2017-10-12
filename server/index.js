@@ -16,6 +16,8 @@ const RedisStore = require('connect-redis')(session);
 const passport = require('./passport.js');
 const yelp = require('../yelp/yelp.js');
 
+const DIST_DIR = path.resolve(__dirname, '../client/dist');
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
@@ -48,7 +50,7 @@ app.get('/manager', (req, res, next) => {
   }
 });
 
-app.use(express.static(path.resolve(__dirname, '../client/dist')));
+app.use(express.static(DIST_DIR));
 
 //this shows how you can get queue information from the cookie of a customer who has already queue up
 app.use((req, res, next) => {
@@ -225,6 +227,10 @@ app.put('/queues', (req, res) => {
 });
 
 /* CUSTOMER endpoints */
+
+app.get(/(managerlogin)|(signup)/, (req, res) => {
+  res.sendFile(path.join(DIST_DIR, './managerlogin/index.html'));
+});
 
 // login a customer for a restaurant
 app.post('/customerlogin', passport.authenticate('local', { successRedirect: '/customer' }), (req, res) => {
