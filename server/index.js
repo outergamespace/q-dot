@@ -14,6 +14,7 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 const RedisStore = require('connect-redis')(session);
 const passport = require('./passport.js');
+const yelp = require('../yelp/yelp.js');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
@@ -68,12 +69,41 @@ app.get('/', (req, res) => {
 //get info for one restaurant or all restaurants
 app.get('/restaurants', (req, res) => {
   if (req.query.restaurantId) {
-    dbQuery.findInfoForOneRestaurant(req.query.restaurantId)
-      .then(results => res.send(results))
-      .catch(error => {
-        console.log('error getting info for one restaurants', error);
-        res.send('failed for one restaurant');
-      });
+    // Get DB and Yelp data before sending response
+    Promise.all([
+      yelp.getRestaurant(req.query.restaurantId)
+        .then((yelpInfo) => { return yelpInfo; } )
+        .catch((err) => { console.log('errrrrrror: ', err); }),
+      // TODO test and if needed, handle case of Yelp unavailable
+      dbQuery.findInfoForOneRestaurant(req.query.restaurantId)
+        .then(results => {
+          //res.send(results);
+          return (results);
+        })
+        .catch(error => {
+          console.log('error getting info for one restaurants', error);
+          res.send('failed for one restaurant');
+        })
+    ])
+      .then((values) => {
+        // combine data from yelp and db into one object
+        const yelpData = values[0]; // only need some yelpData
+        const combinedData = values[1]; // Keep all the DB data
+
+        combinedData.dataValues.yelpID = yelpData.id;
+        combinedData.dataValues.yelpURL = yelpData.url;
+        combinedData.dataValues.phone = yelpData.display_phone;
+        combinedData.dataValues.categories = yelpData.categories;
+        combinedData.dataValues.rating = yelpData.rating;
+        combinedData.dataValues.location = yelpData.location;
+        combinedData.dataValues.coordinates = yelpData.coordinates;
+        combinedData.dataValues.photos = yelpData.photos;
+        combinedData.dataValues.price = yelpData.price;
+        combinedData.dataValues.hours = yelpData.hours;
+
+        res.send(combinedData);
+      })
+      .catch((err) => { console.log('errrrrrror: ', err); });
   } else {
     dbQuery.findInfoForAllRestaurants()
       .then(restaurants => res.send(restaurants))
