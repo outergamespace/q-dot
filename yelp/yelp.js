@@ -1,10 +1,11 @@
 'use strict';
 
+//https://github.com/tonybadguy/yelp-fusion
 const yelp = require('yelp-fusion');
 
 const clientId = 'IegpwpbBcI3JTyStfEbLQg';
 const clientSecret = 'Ve4uyDTxV5bPijU2T9zqJE5lmn7IXgprrQyih5IsX8ruOmaJZyBra4gxscqg04VO';
-
+// TODO map db ids to yelp ids, return correct choice
 yelp.getTempest = function(cb) {
 
 const searchRequest = {
@@ -15,13 +16,27 @@ const searchRequest = {
 return yelp.accessToken(clientId, clientSecret).then(response => {
   const client = yelp.client(response.jsonBody.access_token);
 
-  return client.search(searchRequest).then(response => {
+return client.search(searchRequest).then(response => {
     const firstResult = response.jsonBody.businesses[0];
-    const prettyJson = JSON.stringify(firstResult, null, 4);
-    console.log(prettyJson);
+    //const prettyJson = JSON.stringify(firstResult, null, 4);
+    //console.log(prettyJson);
     //cb(firstResult);
     //resolve(firstResult);
     return firstResult;
+  });
+}).catch(e => {
+  console.log(e);
+});
+
+}
+
+yelp.getRestaurant = function(yelpID) {
+
+return yelp.accessToken(clientId, clientSecret).then(response => {
+  const client = yelp.client(response.jsonBody.access_token);
+
+return client.business(yelpID).then(response => {
+    return response.jsonBody;
   });
 }).catch(e => {
   console.log(e);

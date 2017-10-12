@@ -69,27 +69,50 @@ app.get('/', (req, res) => {
 //get info for one restaurant or all restaurants
 app.get('/restaurants', (req, res) => {
   if (req.query.restaurantId) {
-    yelp.getTempest()
+/*    yelp.getTempest()
       .then((yelpInfo) => { console.log('THEN DO STUFF ', yelpInfo); } )
-      .catch((err) => { console.log('errrrrrror: ', err); });
+      .catch((err) => { console.log('errrrrrror: ', err); });*/
 
-    dbQuery.findInfoForOneRestaurant(req.query.restaurantId)
+    /*dbQuery.findInfoForOneRestaurant(req.query.restaurantId)
       .then(results => res.send(results))
       .catch(error => {
         console.log('error getting info for one restaurants', error);
         res.send('failed for one restaurant');
-      });
-    console.log('put yelp here', yelp);
- /* THIS WORKS
-    yelp.getTempest((yelpResult) => {
-      console.log('HERRRRREEEE: ', yelpResult);
-    });*/
+      });*/
+// Get DB and Yelp data before sending response
+    Promise.all([
+      //yelp.getTempest()
+      yelp.getRestaurant('tempest-san-francisco')
+        .then((yelpInfo) => { return yelpInfo; } )
+        .catch((err) => { console.log('errrrrrror: ', err); }),
+      dbQuery.findInfoForOneRestaurant(req.query.restaurantId)
+        .then(results => {
+          //res.send(results);
+          return (results);
+        })
+        .catch(error => {
+          console.log('error getting info for one restaurants', error);
+          res.send('failed for one restaurant');
+        })
+    ])
+      .then((values) => {
+        // combine data from yelp and db into one object
+        const yelpData = values[0];  // only need some yelpData
+        const combinedData = values[1]; // Keep all the DB data
 
-// TypeError: yelp.getTempest.then is not a function
-/*    yelp.getTempest.then(result => {
-      console.log('PPPPpromise: ', result);
-    });*/
-//const yelpPromise = yelp.getTempest();
+        /*combinedData.dataValues.yelpID = yelpData.id;
+        combinedData.dataValues.yelpURL = yelpData.url;
+        combinedData.dataValues.*/
+
+
+        console.log('MADE IT HEEERRREEE', values[0]);
+
+        //res.send(values[1]);
+        console.log('combinedData ', combinedData.dataValues.name);
+
+        res.send(combinedData);
+      })
+      .catch((err) => { console.log('errrrrrror: ', err); });
 
 
   } else {
