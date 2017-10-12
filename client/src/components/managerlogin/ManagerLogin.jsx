@@ -1,5 +1,7 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import $ from 'jquery';
+import '../../../dist/managerlogin/styles.css';
 
 class ManagerLogin extends React.Component {
   constructor(props) {
@@ -55,12 +57,12 @@ class ManagerLogin extends React.Component {
       <div className='container'>
         <div className='form-signin'>
           <h2 className='form-signin-heading'>Please sign in</h2>
-          <label className='sr-only'>Email address</label>
+          <label className='sr-only'>Username</label>
           <input
             value={this.state.username}
             type='username'
             className='form-control'
-            placeholder='username'
+            placeholder='Username'
             required autoFocus
             onChange={(e) => this.updateInputFields(e, 'username')}
           />
@@ -73,6 +75,11 @@ class ManagerLogin extends React.Component {
             required
             onChange={(e) => this.updateInputFields(e, 'password')}
           />
+          <br />
+          {
+            this.state.unauthorised
+              && <div className="alert alert-danger"> invalid credentials - please try again! </div>
+          }
           <button
             className='btn btn-lg btn-primary btn-block'
             onClick={() => this.submitHandler('customer')}
@@ -85,11 +92,8 @@ class ManagerLogin extends React.Component {
           >
             Log in as Manager
           </button>
-          <br />
-          {
-            this.state.unauthorised
-              && <div className="alert alert-danger"> invalid credentials - please try again! </div>
-          }
+
+          <Link to="/signup">New user? Sign up now</Link>
         </div>
 
       </div>
