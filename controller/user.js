@@ -44,34 +44,6 @@ const addUserAndUserProfile = function(username, passwordHash, passwordSalt, rol
   });
 };
 
-// const addUserAndUserProfile = function(username, passwordHash, passwordSalt, role, firstName, lastName, mobile, email) {
-//   // findOrCreate User first
-//   // then create the UserProfile with the association
-//   // NOTE: This seems like a really hacky way to do it. I couldn't get the foriegn key relationship stuff working, which
-//   // I'll leave as a commented out comment block above
-//   return User.findOrCreate({
-//     where: {
-//       username: username,
-//       passwordHash: passwordHash,
-//       passwordSalt: passwordSalt,
-//       role: role
-//     }
-//   }).then(()=> {
-//     User.findOne({ where: { username: username }}).then(userQueryResult => {
-//       console.log(`&&&&: ${username} = ${userQueryResult}`);
-//       UserProfile.findOrCreate({
-//         where: {
-//           firstName: firstName,
-//           lastName: lastName,
-//           mobile: mobile,
-//           email: email,
-//           userId: userQueryResult
-//         }
-//       });
-//     });
-//   });
-// };
-
 /* USER PROFILE */
 const addUserProfile = function(firstName, lastName, mobile, email) {
   return db.UserProfile.findOrCreate({
