@@ -82,9 +82,10 @@ app.get('/restaurants', (req, res) => {
 // Get DB and Yelp data before sending response
     Promise.all([
       //yelp.getTempest()
-      yelp.getRestaurant('tempest-san-francisco')
+      yelp.getRestaurant(req.query.restaurantId)
         .then((yelpInfo) => { return yelpInfo; } )
         .catch((err) => { console.log('errrrrrror: ', err); }),
+        // TODO what if Yelp Fails? - make DB carry on
       dbQuery.findInfoForOneRestaurant(req.query.restaurantId)
         .then(results => {
           //res.send(results);
@@ -100,9 +101,17 @@ app.get('/restaurants', (req, res) => {
         const yelpData = values[0];  // only need some yelpData
         const combinedData = values[1]; // Keep all the DB data
 
-        /*combinedData.dataValues.yelpID = yelpData.id;
+        combinedData.dataValues.yelpID = yelpData.id;
         combinedData.dataValues.yelpURL = yelpData.url;
-        combinedData.dataValues.*/
+        combinedData.dataValues.phone = yelpData.display_phone;
+        combinedData.dataValues.categories = yelpData.categories;
+        combinedData.dataValues.rating = yelpData.rating;
+        combinedData.dataValues.location = yelpData.location;
+        combinedData.dataValues.coordinates = yelpData.coordinates;
+        combinedData.dataValues.photos = yelpData.photos;
+        combinedData.dataValues.price = yelpData.price;
+        combinedData.dataValues.hours = yelpData.hours;
+
 
 
         console.log('MADE IT HEEERRREEE', values[0]);
