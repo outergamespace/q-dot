@@ -69,23 +69,12 @@ app.get('/', (req, res) => {
 //get info for one restaurant or all restaurants
 app.get('/restaurants', (req, res) => {
   if (req.query.restaurantId) {
-/*    yelp.getTempest()
-      .then((yelpInfo) => { console.log('THEN DO STUFF ', yelpInfo); } )
-      .catch((err) => { console.log('errrrrrror: ', err); });*/
-
-    /*dbQuery.findInfoForOneRestaurant(req.query.restaurantId)
-      .then(results => res.send(results))
-      .catch(error => {
-        console.log('error getting info for one restaurants', error);
-        res.send('failed for one restaurant');
-      });*/
-// Get DB and Yelp data before sending response
+    // Get DB and Yelp data before sending response
     Promise.all([
-      //yelp.getTempest()
       yelp.getRestaurant(req.query.restaurantId)
         .then((yelpInfo) => { return yelpInfo; } )
         .catch((err) => { console.log('errrrrrror: ', err); }),
-        // TODO what if Yelp Fails? - make DB carry on
+      // TODO test and if needed, handle case of Yelp unavailable
       dbQuery.findInfoForOneRestaurant(req.query.restaurantId)
         .then(results => {
           //res.send(results);
@@ -98,7 +87,7 @@ app.get('/restaurants', (req, res) => {
     ])
       .then((values) => {
         // combine data from yelp and db into one object
-        const yelpData = values[0];  // only need some yelpData
+        const yelpData = values[0]; // only need some yelpData
         const combinedData = values[1]; // Keep all the DB data
 
         combinedData.dataValues.yelpID = yelpData.id;
@@ -112,18 +101,9 @@ app.get('/restaurants', (req, res) => {
         combinedData.dataValues.price = yelpData.price;
         combinedData.dataValues.hours = yelpData.hours;
 
-
-
-        console.log('MADE IT HEEERRREEE', values[0]);
-
-        //res.send(values[1]);
-        console.log('combinedData ', combinedData.dataValues.name);
-
         res.send(combinedData);
       })
       .catch((err) => { console.log('errrrrrror: ', err); });
-
-
   } else {
     dbQuery.findInfoForAllRestaurants()
       .then(restaurants => res.send(restaurants))
