@@ -3,8 +3,9 @@
 //https://github.com/tonybadguy/yelp-fusion
 const yelp = require('yelp-fusion');
 
-const clientId = 'IegpwpbBcI3JTyStfEbLQg';
-const clientSecret = 'Ve4uyDTxV5bPijU2T9zqJE5lmn7IXgprrQyih5IsX8ruOmaJZyBra4gxscqg04VO';
+const clientId = process.env.QDOT_YELP_API_CLIENT_ID;
+const clientSecret = process.env.QDOT_YELP_API_CLIENT_SECRET;
+
 /*term, string, restaurant name
 location string, 'city, stateAbbreviation(all lower case)'
 Example:  yelp.search('Tsunami Panhandle', 'san francisco, ca')
