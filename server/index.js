@@ -12,6 +12,7 @@ const dbUserQuery = require('../controller/user.js');
 const dummyData = require('../database/dummydata.js');
 const helpers = require('../helpers/helpers.js');
 const bodyParser = require('body-parser');
+
 const session = require('express-session');
 const RedisStore = require('connect-redis')(session);
 const passport = require('./passport.js');
@@ -236,10 +237,10 @@ app.get(/(managerlogin)|(signup)/, (req, res) => {
 });
 
 // login a customer for a restaurant
-app.post('/customerlogin', passport.authenticate('local', { successRedirect: '/customer' }), (req, res) => {
-  console.log('[CUSTOMER] LOGIN:', req.body);
+app.post('/customerlogin', passport.authenticate('local'), (req, res) => {
+  console.log('[CUSTOMER] LOGIN:', req);
   // res.redirect('/customer');
-  res.send('/customer');
+  res.status(200).send('/customer');
 });
 
 app.get('/customerlogout', (req, res) => {

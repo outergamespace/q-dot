@@ -50,9 +50,11 @@ passport.serializeUser(function(user, done) {
 
 passport.deserializeUser(function(id, done) {
   console.log('deserializing user: ', id);
-  db.User.findById(id)
+  dbQuery.getUserProfileInfo(id)
     .then(user => {
-      console.log('found user: ', user.username);
+      //TODO: At this point our UserProfile data is valid.
+      // We need to figure out what we want to do next
+      console.log('found user: ', user);
       return done(null, user);
     })
     .catch(err => {
