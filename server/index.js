@@ -132,8 +132,10 @@ app.post('/dummydata', (req, res) => {
 //add a customer to the queue at a restaurant
 app.post('/queues', (req, res) => {
   console.log('req body', req.body);
-  if (!req.body.name || !req.body.mobile || !req.body.restaurantId
-      || !req.body.size) {
+  // HACK: Disabled for now. We will need to pass down UserProfile into the component prop
+  // if (!req.body.name || !req.body.mobile || !req.body.restaurantId
+  //     || !req.body.size) {
+  if (false) {
     res.status(400).send('Bad Request');
   } else {
     dbQuery.addToQueue(req.body)
@@ -236,7 +238,8 @@ app.get(/(managerlogin)|(signup)/, (req, res) => {
 // login a customer for a restaurant
 app.post('/customerlogin', passport.authenticate('local', { successRedirect: '/customer' }), (req, res) => {
   console.log('[CUSTOMER] LOGIN:', req.body);
-  res.redirect('/customer');
+  // res.redirect('/customer');
+  res.send('/customer');
 });
 
 app.get('/customerlogout', (req, res) => {
