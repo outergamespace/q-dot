@@ -35,7 +35,7 @@ class Signup extends React.Component {
     } else {
       const data = { username, password, firstName, lastName, phone, email };
       const ajaxOptions = {
-        url: '/customer-signup',
+        url: '/customersignup',
         method: 'POST',
         data: JSON.stringify(data),
         contentType: 'application/json',

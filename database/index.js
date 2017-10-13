@@ -29,7 +29,10 @@ const User = db.define('user', {
     primaryKey: true,
     autoIncrement: true
   },
-  username: Sequelize.STRING,
+  username: {
+    type: Sequelize.STRING,
+    unique: true
+  },
   passwordHash: Sequelize.STRING,
   passwordSalt: Sequelize.STRING,
   role: Sequelize.ENUM('manager', 'customer')
@@ -50,7 +53,8 @@ const UserProfile = db.define('userprofile', {
     unique: true,
     allowNull: false
   },
-  email: Sequelize.STRING
+  email: Sequelize.STRING,
+  // userId: Sequelize.INTEGER
 });
 
 //Manager Audit History Schema
@@ -136,8 +140,7 @@ const Restaurant = db.define('restaurant', {
 });
 
 // Relationship between User and UserProfile
-User.hasOne(UserProfile);
-UserProfile.belongsTo(User);
+User.UserProfile = UserProfile.belongsTo(User);
 
 // Relationship between Restaurant & Queue
 Restaurant.hasMany(Queue);
