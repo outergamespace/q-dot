@@ -15,7 +15,7 @@ class CustomerHome extends React.Component {
       currentRestaurant: {},
       restaurantList: [],
       coordinates: [{lat: 37.8217225, lng: -122.4838372}, {lat: 37.760424, lng: -122.4764438}, {lat: 37.78304066229441, lng: -122.42128827514648}],
-      page: 'map'
+      page: 'list'
     };
     this.changePage = this.changePage.bind(this);
   }
@@ -25,9 +25,9 @@ class CustomerHome extends React.Component {
   }
 
   changePage() {
-    this.state.page === 'map' 
-    ? this.setState({ page: 'list' }) 
-    : this.setState({ page: 'map' })
+    this.state.page === 'list' 
+    ? this.setState({ page: 'map' }) 
+    : this.setState({ page: 'list' })
   }
 
   getRestaurantList() {
@@ -49,19 +49,19 @@ class CustomerHome extends React.Component {
       <div className="customer-home">
         <CustomerBanner />
         <div className="nav-bar">
-        <span className={this.state.page === 'map' ? 'select' : 'unselect'} onClick={this.changePage}>Map</span>
           <span className={this.state.page === 'list' ? 'select' : 'unselect'} onClick={this.changePage}>List</span>
+          <span className={this.state.page === 'map' ? 'select' : 'unselect'} onClick={this.changePage}>Map</span>
         </div>
-        {this.state.page === 'map'
-        ? <RestaurantsMap coordinates={this.state.coordinates}/>
-        : <div className="select-restaurant-container">
+        {this.state.page === 'list'
+        ? <div className="select-restaurant-container">
             <h4>Help me queue up at...</h4>
             {this.state.restaurantList.map(restaurant => (
               <div key={restaurant.id}>
                 <Link to={`/restaurant/${restaurant.name}/${restaurant.id}`}><RestaurantCard restaurant={restaurant}/></Link>
               </div>
             ))}
-          </div>}
+          </div>
+        : <RestaurantsMap coordinates={this.state.coordinates}/>}
       </div>
     );
   }
@@ -69,6 +69,7 @@ class CustomerHome extends React.Component {
 }
 
 export default CustomerHome;
+
 
 
 

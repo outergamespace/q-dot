@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import GoogleMapReact from 'google-map-react';
+import QDOT_GOOGLE_API_KEY from './googleMapAPI_KEY.js'
 
 // const greatPlaceStyle = {
 //   position: 'absolute',
@@ -44,7 +45,7 @@ export default class GoogleMap extends Component {
     return (
 				<div className="restaurant-map" >
  					<GoogleMapReact
- 					  // apiKey={process.env.QDOT_GOOGLE_API_KEY}
+ 					  bootstrapURLKeys={{key: QDOT_GOOGLE_API_KEY}}
 						onClick={this._onClick}
 		        center={{lat: this.props.coordinates.latitude, lng: this.props.coordinates.longitude}}
 		        zoom={this.state.zoom}

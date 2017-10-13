@@ -30,6 +30,9 @@ coverage
 node_modules/
 bower_components/
 
+
+client/src/components/customer/googleMapAPI_Key.js
+
 client/dist/js/
 customerApp-bundle.js
 managerApp-bundle.js

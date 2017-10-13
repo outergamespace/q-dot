@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import GoogleMapReact from 'google-map-react';
+import QDOT_GOOGLE_API_KEY from './googleMapAPI_KEY.js'
 
 // const greatPlaceStyle = {
 //   position: 'absolute',
@@ -48,7 +49,7 @@ export default class RestaurantsMap extends Component {
           key={marker.index}
           lat={marker.lat}
           lng={marker.lng}
-          src="http://maps.google.com/mapfiles/kml/paddle/red-circle.png"
+          src="http://maps.google.com/mapfiles/kml/paddle/red-stars.png"
         />
       ));
 
@@ -59,6 +60,7 @@ export default class RestaurantsMap extends Component {
 		        center={this.state.center}
 		        zoom={this.state.zoom}
 		        // hoverDistance={K_HOVER_DISTANCE}
+		        bootstrapURLKeys={{key: QDOT_GOOGLE_API_KEY}}
 						resetBoundsOnResize = {true}
 		      > 
 		      {Markers}
