@@ -8,6 +8,7 @@ const db = require('../database/index.js');
 const util = require('../controller/util.js');
 const dbQuery = require('../controller/index.js');
 const dbManagerQuery = require('../controller/manager.js');
+const dbUserQuery = require('../controller/user.js');
 const dummyData = require('../database/dummydata.js');
 const helpers = require('../helpers/helpers.js');
 const bodyParser = require('body-parser');
@@ -15,6 +16,8 @@ const session = require('express-session');
 const RedisStore = require('connect-redis')(session);
 const passport = require('./passport.js');
 const yelp = require('../yelp/yelp.js');
+
+const DIST_DIR = path.resolve(__dirname, '../client/dist');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
@@ -48,7 +51,7 @@ app.get('/manager', (req, res, next) => {
   }
 });
 
-app.use(express.static(path.resolve(__dirname, '../client/dist')));
+app.use(express.static(DIST_DIR));
 
 //this shows how you can get queue information from the cookie of a customer who has already queue up
 app.use((req, res, next) => {
@@ -226,6 +229,10 @@ app.put('/queues', (req, res) => {
 
 /* CUSTOMER endpoints */
 
+app.get(/(managerlogin)|(signup)/, (req, res) => {
+  res.sendFile(path.join(DIST_DIR, './managerlogin/index.html'));
+});
+
 // login a customer for a restaurant
 app.post('/customerlogin', passport.authenticate('local', { successRedirect: '/customer' }), (req, res) => {
   console.log('[CUSTOMER] LOGIN:', req.body);
@@ -234,6 +241,34 @@ app.post('/customerlogin', passport.authenticate('local', { successRedirect: '/c
 
 app.get('/customerlogout', (req, res) => {
   console.log('[CUSTOMER] LOGOUT');
+});
+
+// signup a user for the service
+app.post('/customersignup', (req, res) => {
+  console.log('[CUSTOMER] SIGNUP', req.body);
+  const userFormData = req.body;
+  const passwordInfo = util.genPassword(userFormData.password, util.genSalt());
+  // TODO: need a good place to set a const variable for this the 'customer' string value
+  const role = 'customer';
+  dbUserQuery.addUserAndUserProfile(
+    userFormData.username,
+    passwordInfo.passwordHash,
+    passwordInfo.salt,
+    role,
+    userFormData.firstName,
+    userFormData.lastName,
+    userFormData.phone,
+    userFormData.email
+  ).then(signupSuccess => {
+    // console.log('*** SUCCESS *** ');
+    // successful account creation
+    res.redirect('/customer');
+  }).catch(signupFailure => {
+    // console.log('*** FAILURE *** ');
+    // failed account creation
+    // TODO: we might want to do something here at some point
+    res.send();
+  });
 });
 
 //login a manager for a restaurant
