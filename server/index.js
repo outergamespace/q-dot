@@ -230,6 +230,14 @@ app.put('/queues', (req, res) => {
   }
 });
 
+app.get('/user', (req, res) => {
+  if (req.user) {
+    res.send(req.user);
+  } else {
+    res.send(null);
+  }
+});
+
 /* CUSTOMER endpoints */
 
 app.get(/(managerlogin)|(signup)/, (req, res) => {
@@ -298,9 +306,9 @@ app.get('/logout', (req, res) => {
       } else if (userProfile.role === 'customer') {
         // TODO: check this when we have a customerlogout
         // is this necessary? and why?
-        // req.logout();
+        req.logout();
         // should we redirect to the HOME page instead?
-        res.redirect('/managerlogin');
+        res.redirect('/customer');
       } else {
         // unrecognized user role
         res.sendStatus(400);

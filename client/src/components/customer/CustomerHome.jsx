@@ -25,13 +25,19 @@ class CustomerHome extends React.Component {
                     {lat: 37.7769872, lng: -122.4385184},
                     {lat: 37.7570666079255, lng: -122.416596234642}
                    ],
-      page: 'list'
+      page: 'list',
+      currentCustomer: null,
     };
+
+    /* METHOD BINDING */
     this.changePage = this.changePage.bind(this);
+    this.getRestaurantList = this.getRestaurantList.bind(this);
+    this.getCurrentCustomer = this.getCurrentCustomer.bind(this);
   }
 
   componentDidMount() {
     this.getRestaurantList();
+    this.getCurrentCustomer();
   }
 
   changePage() {
@@ -54,10 +60,24 @@ class CustomerHome extends React.Component {
     });
   }
 
+  getCurrentCustomer() {
+    $.ajax({
+      method: 'GET',
+      url: '/user',
+      success: (data) => {
+        console.log('successfully grabbed queue data for customer', data);
+        this.setState({ currentCustomer: data });
+      },
+      error: (error) => {
+        console.log('failed to grab queue data for customer', error);
+      }
+    });
+  }
+
   render() {
     return (
       <div className="customer-home">
-        <CustomerBanner />
+        <CustomerBanner customer={this.state.currentCustomer} />
         <div className="nav-bar">
           <span className={this.state.page === 'list' ? 'select' : 'unselect'} onClick={this.changePage}>List</span>
           <span className={this.state.page === 'map' ? 'select' : 'unselect'} onClick={this.changePage}>Map</span>
