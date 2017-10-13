@@ -30,8 +30,8 @@ coverage
 node_modules/
 bower_components/
 
-
-client/src/components/customer/googleMapAPI_Key.js
+# ignore the local key file
+googleMapAPI_KEY.js
 
 client/dist/js/
 customerApp-bundle.js
