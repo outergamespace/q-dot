@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import GoogleMapReact from 'google-map-react';
 import QDOT_GOOGLE_API_KEY from './googleMapAPI_KEY.js'
 
+//list view
+
 // const greatPlaceStyle = {
 //   position: 'absolute',
 //   width: 40,
@@ -28,7 +30,7 @@ export default class RestaurantsMap extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			center: {lat: 37.7749, lng: -122.4194},
+			center: {lat: 37.7749, lng: -122.4248931640625},
 			zoom: 12,
 			restaurantName: 'HEllo',
 			coordinates: [],
