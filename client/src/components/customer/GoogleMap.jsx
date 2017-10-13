@@ -19,7 +19,7 @@ import GoogleMapReact from 'google-map-react';
 
 // const Marker = ({ text }) => <div style={greatPlaceStyle} ><img src="http://maps.google.com/mapfiles/kml/paddle/red-circle.png"/>{text}</div>;
 // pulling png from internet, local dir not working
-const Marker = ({ text }) => <div><img src="http://maps.google.com/mapfiles/kml/paddle/red-circle.png"/>{text}</div>;
+// const Marker = ({ text }) => <div><img src="http://maps.google.com/mapfiles/kml/paddle/red-circle.png"/>{text}</div>;
 
 export default class GoogleMap extends Component {
 	constructor(props) {
@@ -31,6 +31,11 @@ export default class GoogleMap extends Component {
 		}
 	}
 
+	componentDidMount() {
+		console.log('coordinates',this.props.coordinates);
+		// this.setState({center: {lat: this.props.coordinates.latitude, lng: this.props.coordinates.longitude}});
+	}
+
 	_onClick ({x, y, lat, lng, event}) {
 		console.log(x, y, lat, lng, event)
 	}
@@ -39,16 +44,18 @@ export default class GoogleMap extends Component {
     return (
 				<div className="restaurant-map" >
  					<GoogleMapReact
+ 					  // apiKey={process.env.QDOT_GOOGLE_API_KEY}
 						onClick={this._onClick}
-		        center={this.state.center}
+		        center={{lat: this.props.coordinates.latitude, lng: this.props.coordinates.longitude}}
 		        zoom={this.state.zoom}
 						resetBoundsOnResize = {true}
 		      >
-		        <Marker
-		          lat={this.state.center.lat}
-		          lng={this.state.center.lng}
-		          text={this.state.restaurantName}
-		        />
+          <img position="absolute"
+          lat={this.props.coordinates.latitude}
+          lng={this.props.coordinates.longitude}
+          text={this.state.restaurantName}
+          src="http://maps.google.com/mapfiles/kml/pal4/icon51.png"/>
+
 		      </GoogleMapReact>
 				</div>
 

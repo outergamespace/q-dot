@@ -28,7 +28,7 @@ export default class RestaurantsMap extends Component {
 		super(props);
 		this.state = {
 			center: {lat: 37.7749, lng: -122.4194},
-			zoom: 13,
+			zoom: 12,
 			restaurantName: 'HEllo',
 			coordinates: [],
 		};
