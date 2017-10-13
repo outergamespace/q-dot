@@ -260,14 +260,11 @@ app.post('/customersignup', (req, res) => {
     userFormData.phone,
     userFormData.email
   ).then(signupSuccess => {
-    // console.log('*** SUCCESS *** ');
-    // successful account creation
-    res.redirect('/customer');
+    // the redirect is happening on the client side via the response
+    // so we just send the location back to the client
+    res.status(201).send('/customer');
   }).catch(signupFailure => {
-    // console.log('*** FAILURE *** ');
-    // failed account creation
-    // TODO: we might want to do something here at some point
-    res.send();
+    res.status(400).send('Failed to create user - username already taken');
   });
 });
 
