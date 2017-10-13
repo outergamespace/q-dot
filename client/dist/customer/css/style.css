@@ -31,4 +31,20 @@
   font-weight: 200;
   line-height: 1;
 }
-
+.yelp-info {
+  padding: 2em;
+}
+.yelp-info > p {
+  margin: .1em;
+  color: #6d6d6d;
+  font-weight: 300;
+  letter-spacing: 0.3px;
+}
+.yelp-info > p:first-child {
+  margin-top: 1em;
+}
+.yelp-logo {
+  float: right;
+  max-width: 100px;
+  margin-top: -15px;
+}
