@@ -20,8 +20,16 @@ class CustomerInfoForm extends React.Component {
       customerLastName: '',
       customerMobile: '',
       customerEmail: '',
-      currentRestaurantId: this.props.currentRestaurantId
+      coordinates: '',
+      currentRestaurantId: ''
     };
+  }
+
+  componentWillReceiveProps() {
+    this.setState({
+      coordinates: this.props.selectedCoordinates,
+      // currentRestaurantId: this.props.currentRestaurantId
+    });
   }
 
   getGroupSize(size) {
@@ -101,7 +109,7 @@ class CustomerInfoForm extends React.Component {
         </div>
         <br />
         <br />
-        <GoogleMap className="map" display="block" margin="auto" />
+        <GoogleMap className="map" display="block" margin="auto" coordinates={this.props.selectedCoordinates}/>
       </div>
     );
   }
