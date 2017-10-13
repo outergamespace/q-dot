@@ -31,7 +31,10 @@ const User = db.define('user', {
   },
   username: {
     type: Sequelize.STRING,
-    unique: true
+    unique: true,
+    validate: {
+      notEmpty: true
+    }
   },
   passwordHash: Sequelize.STRING,
   passwordSalt: Sequelize.STRING,
