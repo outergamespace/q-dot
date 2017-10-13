@@ -42,9 +42,10 @@ export default class GoogleMap extends Component {
 	}
 
   render() {
+  	{console.log(this.props)}
     return (
 				<div className="restaurant-map" >
- 					<GoogleMapReact
+ 					<GoogleMapReact 
  					  bootstrapURLKeys={{key: QDOT_GOOGLE_API_KEY}}
 						onClick={this._onClick}
 		        center={{lat: this.props.coordinates.latitude, lng: this.props.coordinates.longitude}}
@@ -55,7 +56,7 @@ export default class GoogleMap extends Component {
           lat={this.props.coordinates.latitude}
           lng={this.props.coordinates.longitude}
           text={this.state.restaurantName}
-          src="http://maps.google.com/mapfiles/kml/pal4/icon51.png"/>
+          src="http://maps.google.com/mapfiles/kml/paddle/red-stars.png"/>
 
 		      </GoogleMapReact>
 				</div>
@@ -63,4 +64,6 @@ export default class GoogleMap extends Component {
     );
   }
 }
+
+// "http://maps.google.com/mapfiles/kml/pal4/icon51.png"
 

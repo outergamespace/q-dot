@@ -1,6 +1,7 @@
 .restaurant-map {
-	width: 600px;
-	height: 480px;
+	width: 100%;
+	height: 600px;
+  position: relative;
 	display: block;
 	margin: auto;
 	padding: 15px;

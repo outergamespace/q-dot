@@ -14,7 +14,17 @@ class CustomerHome extends React.Component {
       selectRestaurant: false,
       currentRestaurant: {},
       restaurantList: [],
-      coordinates: [{lat: 37.8217225, lng: -122.4838372}, {lat: 37.760424, lng: -122.4764438}, {lat: 37.78304066229441, lng: -122.42128827514648}],
+      coordinates: [
+                    {lat: 37.79338, lng:-122.4225}, 
+                    {lat: 37.7812215727578, lng:-122.40627989109},
+                    {lat: 37.7602179, lng: -122.4110749},
+                    {lat: 37.774905, lng: -122.437506},
+                    {lat: 37.782787322998, lng: -122.462539672852},
+                    {lat: 37.78374, lng: -122.433005},
+                    {lat: 37.7642352, lng: -122.4306936},
+                    {lat: 37.7769872, lng: -122.4385184},
+                    {lat: 37.7570666079255, lng: -122.416596234642}
+                   ],
       page: 'list'
     };
     this.changePage = this.changePage.bind(this);
