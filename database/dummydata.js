@@ -85,6 +85,27 @@ const addUserProfiles = (firstName, lastName, mobile, email) => {
 };
 
 const addUserAndUserProfile = (username, passwordHash, passwordSalt, role, firstName, lastName, mobile, email) => {
+  // a48af21cebc18c880a2b9c53dd8b3fab483e26ff2b7b77dd9def2afe8305ff44b17f1b8d58e6106bb49570e602fde2b960e0e420d53874b2d8626016bbd97f83
+  const addJohnnyManager = dbUserController.addUserAndUserProfile(
+    'johnny',
+    'a48af21cebc18c880a2b9c53dd8b3fab483e26ff2b7b77dd9def2afe8305ff44b17f1b8d58e6106bb49570e602fde2b960e0e420d53874b2d8626016bbd97f83',
+    '8b1269b13d1258b15af6c66f4f4d5cd9',
+    'manager',
+    'Johnny',
+    'Li',
+    '5554441111',
+    'johnny@email.com'
+  );
+  const addLamManager = dbUserController.addUserAndUserProfile(
+    'lam',
+    'b83b115e06da6c88b745873ebb2cfc5677e68b5bdc83d3e221feb32ad4ea33dc7326122e64ac67792bd911507a7f0658bc2962f0c9d656cf810656af98e87eb5',
+    '8162531bb95b0ff39b8cfdd761642748',
+    'manager',
+    'Lam',
+    'Bui',
+    '5550001111',
+    'lam@email.com'
+  );
   const addCustomerOne = dbUserController.addUserAndUserProfile(
     'customer1',
     '24a41efa18fb5e14f8d897f716fb7ab3d72386bdaaf8e42f0bbddd8234247076cbcbccb68d26b68a4681688c903bb22bca15f3cd1a911c004edc718c3cd531da',
@@ -115,7 +136,7 @@ const addUserAndUserProfile = (username, passwordHash, passwordSalt, role, first
     '5553333333',
     'customer.three@email.com'
   );
-  let promises = [ addCustomerOne, addCustomerTwo, addCustomerThree ];
+  let promises = [ addJohnnyManager, addLamManager, addCustomerOne, addCustomerTwo, addCustomerThree ];
   return Promise.all(promises);
 };
 

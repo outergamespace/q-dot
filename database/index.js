@@ -57,7 +57,6 @@ const UserProfile = db.define('userprofile', {
     allowNull: false
   },
   email: Sequelize.STRING,
-  // userId: Sequelize.INTEGER
 });
 
 //Manager Audit History Schema

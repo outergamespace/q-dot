@@ -12,6 +12,7 @@ const dbUserQuery = require('../controller/user.js');
 const dummyData = require('../database/dummydata.js');
 const helpers = require('../helpers/helpers.js');
 const bodyParser = require('body-parser');
+
 const session = require('express-session');
 const RedisStore = require('connect-redis')(session);
 const passport = require('./passport.js');
@@ -132,8 +133,10 @@ app.post('/dummydata', (req, res) => {
 //add a customer to the queue at a restaurant
 app.post('/queues', (req, res) => {
   console.log('req body', req.body);
-  if (!req.body.name || !req.body.mobile || !req.body.restaurantId
-      || !req.body.size) {
+  // HACK: Disabled for now. We will need to pass down UserProfile into the component prop
+  // if (!req.body.name || !req.body.mobile || !req.body.restaurantId
+  //     || !req.body.size) {
+  if (false) {
     res.status(400).send('Bad Request');
   } else {
     dbQuery.addToQueue(req.body)
@@ -234,9 +237,10 @@ app.get(/(managerlogin)|(signup)/, (req, res) => {
 });
 
 // login a customer for a restaurant
-app.post('/customerlogin', passport.authenticate('local', { successRedirect: '/customer' }), (req, res) => {
-  console.log('[CUSTOMER] LOGIN:', req.body);
-  res.redirect('/customer');
+app.post('/customerlogin', passport.authenticate('local'), (req, res) => {
+  console.log('[CUSTOMER] LOGIN:', req);
+  // res.redirect('/customer');
+  res.status(200).send('/customer');
 });
 
 app.get('/customerlogout', (req, res) => {

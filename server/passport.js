@@ -44,12 +44,24 @@ passport.use(new LocalStrategy(
 ));
 
 passport.serializeUser(function(user, done) {
+  console.log('serializing user: ', user.id);
   done(null, user.id);
 });
 
 passport.deserializeUser(function(id, done) {
   console.log('deserializing user: ', id);
-  db.Manager.findById(id).then(user => done(null, user)).catch(err => done(err, null));
+  dbQuery.getUserProfileInfo(id)
+    .then(user => {
+      //TODO: At this point our UserProfile data is valid.
+      // We need to figure out what we want to do next
+      console.log('found user: ', user);
+      return done(null, user);
+    })
+    .catch(err => {
+      console.log('error finding user: ', err);
+      return done(err, null);
+    });
+  // db.Manager.findById(id).then(user => done(null, user)).catch(err => done(err, null));
 });
 
 module.exports = passport;

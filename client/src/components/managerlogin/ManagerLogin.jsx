@@ -33,6 +33,7 @@ class ManagerLogin extends React.Component {
       data: JSON.stringify(data),
       contentType: 'application/json',
       success: (data) => {
+        console.log('LOGIN SUCCESS: ', data);
         self.setState({
           unauthorised: false
         });
