@@ -10,7 +10,7 @@ class SelectedRestaurant extends React.Component {
     super(props);
     this.customerInfoSubmitted = this.customerInfoSubmitted.bind(this);
     this.state = {
-      currentRestaurant: {queues: []},
+      currentRestaurant: null,
       infoSubmitted: false,
       queueId: 0,
       queuePosition: 0,
@@ -51,10 +51,15 @@ class SelectedRestaurant extends React.Component {
   }
 
   render() {
+    // Prevent making GET request while currentRestaurant is undefined.
+    if (!this.state.currentRestaurant) {
+      return <div />;
+    }
+
     const restaurantImg = {
       backgroundImage: `url(../${this.state.currentRestaurant.image})`
     };
-
+    
     return (
       <div className="selected-restaurant">
         <RestaurantLogoBanner style={restaurantImg} />

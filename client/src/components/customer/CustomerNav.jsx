@@ -10,7 +10,7 @@ const CustomerNav = () => (
       </ul>
       <nav>
         <div className="nav-wrapper">
-          <ul className="nav-mobile hide-on-med-and-down">
+          <ul className="nav-mobile">
             <li><a className="dropdown-button" href="#!" data-activates="dropdown1">q.<i className="material-icons right">arrow_drop_down</i></a></li>
           </ul>
         </div>
