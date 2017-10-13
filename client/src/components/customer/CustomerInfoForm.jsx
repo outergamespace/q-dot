@@ -9,18 +9,9 @@ class CustomerInfoForm extends React.Component {
   constructor(props) {
     super(props);
     this.getGroupSize = this.getGroupSize.bind(this);
-    // this.getFirstName = this.getFirstName.bind(this);
-    // this.getLastName = this.getLastName.bind(this);
-    // this.getMobile = this.getMobile.bind(this);
-    // this.getEmail = this.getEmail.bind(this);
     this.submitCustomerInfo = this.submitCustomerInfo.bind(this);
     this.state = {
       groupSize: 0,
-      customerFirstName: '',
-      customerLastName: '',
-      customerMobile: '',
-      customerEmail: '',
-      coordinates: '',
       currentRestaurantId: ''
     };
   }
@@ -38,39 +29,7 @@ class CustomerInfoForm extends React.Component {
     });
   }
 
-  // getFirstName(event) {
-  //   this.setState({
-  //     customerFirstName: event.target.value
-  //   });
-  // }
-
-  // getLastName(event) {
-  //   this.setState({
-  //     customerLastName: event.target.value
-  //   });
-  // }
-
-  // getFullName() {
-  //   let fullName = `${this.state.customerFirstName} ${this.state.customerLastName}`;
-  //   this.setState({
-  //     customerFullName: fullName
-  //   });
-  // }
-
-  // getMobile(event) {
-  //   this.setState({
-  //     customerMobile: event.target.value
-  //   });
-  // }
-
-  // getEmail(event) {
-  //   this.setState({
-  //     customerEmail: event.target.value
-  //   });
-  // }
-
   submitCustomerInfo() {
-    let fullName = `${this.state.customerFirstName} ${this.state.customerLastName}`;
     let windowUrl = window.location.href;
     let id = windowUrl.slice(-1);
 
@@ -78,9 +37,10 @@ class CustomerInfoForm extends React.Component {
       method: 'POST',
       url: '/queues',
       data: JSON.stringify({
-        name: fullName,
-        mobile: this.state.customerMobile,
-        email: this.state.customerEmail,
+        // name, mobile, email should be removed when server handler retrieves info from db
+        name: '',
+        mobile: '',
+        email: '',
         size: this.state.groupSize,
         restaurantId: id
       }),
