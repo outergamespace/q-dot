@@ -46,7 +46,12 @@ class Signup extends React.Component {
         error: (err) => {
           console.log('Error:', err);
           this.setState({ errMsg: err.message });
-        }
+        },
+        statusCode: {
+          400: (errMsg) => {
+            this.setState({ errMsg });
+          },
+        },
       };
       $.ajax(ajaxOptions);
     }
