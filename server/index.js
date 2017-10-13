@@ -238,9 +238,15 @@ app.get(/(managerlogin)|(signup)/, (req, res) => {
 
 // login a customer for a restaurant
 app.post('/customerlogin', passport.authenticate('local'), (req, res) => {
-  console.log('[CUSTOMER] LOGIN:', req);
-  // res.redirect('/customer');
-  res.status(200).send('/customer');
+  const userLoginData = req.body;
+  console.log('[CUSTOMER] LOGIN:', req.body);
+
+  if (userLoginData && userLoginData.role !== 'customer') {
+    res.status(400).send('Unable to login, please make sure you are logging in as the correct user type');
+  } else {
+    // login successful
+    res.status(200).send('/customer');
+  }
 });
 
 app.get('/customerlogout', (req, res) => {
