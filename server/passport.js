@@ -12,7 +12,6 @@ passport.use(new LocalStrategy(
     if (additionalLoginData.role === 'manager') {
       dbQuery.getManagerInfo(username)
         .then(user => {
-          // console.log('*** MANAGER USER:', user.dataValues);
           if (!user) {
             return done(null, false, { message: 'incorrect username' });
           }
@@ -28,7 +27,6 @@ passport.use(new LocalStrategy(
       // being used, so we probably want to switch to using User at some point
       dbQuery.getUserInfo(username)
         .then(user => {
-          // console.log('*** CUSTOMER USER:', user.dataValues.role);
           if (!user) {
             return done(null, false, { message: 'incorrect username' });
           }

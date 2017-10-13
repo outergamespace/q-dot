@@ -249,10 +249,6 @@ app.post('/customerlogin', passport.authenticate('local'), (req, res) => {
   }
 });
 
-app.get('/customerlogout', (req, res) => {
-  console.log('[CUSTOMER] LOGOUT');
-});
-
 // signup a user for the service
 app.post('/customersignup', (req, res) => {
   console.log('[CUSTOMER] SIGNUP', req.body);
@@ -289,10 +285,30 @@ app.post('/managerlogin', passport.authenticate('local'), (req, res) => {
 // TODO: maybe change this to managerlogout or have a shared logout for both
 // manager and customer
 app.get('/logout', (req, res) => {
-  dbManagerQuery.addAuditHistory('LOGOUT', req.user.id)
-    .then(results => {
-      req.logout();
-      res.redirect('/managerlogin');
+  const userProfileData = req.user.dataValues;
+  // handle special logout procedures depending on user role
+  dbQuery.getUserInfoById(userProfileData.id)
+    .then(userProfile => {
+      if (userProfile.role === 'manager') {
+        dbManagerQuery.addAuditHistory('LOGOUT', req.user.id)
+          .then(results => {
+            req.logout();
+            res.redirect('/managerlogin');
+          });
+      } else if (userProfile.role === 'customer') {
+        // TODO: check this when we have a customerlogout
+        // is this necessary? and why?
+        // req.logout();
+        // should we redirect to the HOME page instead?
+        res.redirect('/managerlogin');
+      } else {
+        // unrecognized user role
+        res.sendStatus(400);
+      }
+    })
+    .catch(error => {
+      // error fetching userProfile data
+      res.sendStatus(500);
     });
 });
 

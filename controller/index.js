@@ -129,6 +129,15 @@ const getUserInfo = (username) => {
   });
 };
 
+// get info for one User
+const getUserInfoById = (userId) => {
+  return db.User.findOne({
+    where: {
+      id: userId
+    }
+  });
+};
+
 // get UserProfile for a given User id
 const getUserProfileInfo = (userId) => {
   return db.UserProfile.findOne({
@@ -183,6 +192,7 @@ module.exports = {
   updateRestaurantStatus: updateRestaurantStatus,
   getQueueInfo: getQueueInfo,
   getUserInfo: getUserInfo,
+  getUserInfoById: getUserInfoById,
   getUserProfileInfo: getUserProfileInfo,
   getCustomerInfo: getCustomerInfo,
   getManagerInfo: getManagerInfo,
