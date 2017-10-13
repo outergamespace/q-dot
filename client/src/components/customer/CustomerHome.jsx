@@ -14,6 +14,7 @@ class CustomerHome extends React.Component {
       selectRestaurant: false,
       currentRestaurant: {},
       restaurantList: [],
+      coordinates: [{lat: 37.8217225, lng: -122.4838372}, {lat: 37.760424, lng: -122.4764438}],
       page: 'list'
     };
     this.changePage = this.changePage.bind(this);
@@ -60,7 +61,7 @@ class CustomerHome extends React.Component {
               </div>
             ))}
           </div>
-        : <RestaurantsMap />}
+        : <RestaurantsMap coordinates={this.state.coordinates}/>}
       </div>
     );
   }
