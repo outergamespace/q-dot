@@ -1,12 +1,9 @@
 import React from 'react';
 
 // nav bar
-const CustomerBanner = (props) => {
-
-  let welcomeMessage;
-  let queueMessage;
-  (props.customer) ? welcomeMessage = `Welcome back, ${props.customer.name}!` : welcomeMessage = 'Welcome!';
-  (props.customer) ? queueMessage = <p className="restaurant-queued-at">You are currently queued at {props.customer.restaurant.name.toUpperCase()}</p> : queueMessage = null;
+const CustomerBanner = ({ customer }) => {
+  let welcomeMessage = customer ? `Welcome back, ${customer.firstName}!` : 'Welcome!';
+  let queueMessage = customer && customer.restaurant && <p className="restaurant-queued-at">You are currently queued at {customer.restaurant.name.toUpperCase()}</p>;
 
   let months = new Array('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December');
   let d = new Date();

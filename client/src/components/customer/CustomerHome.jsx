@@ -68,7 +68,7 @@ class CustomerHome extends React.Component {
         console.log('successfully grabbed queue data for customer', data);
         this.setState({ currentCustomer: data });
       },
-      failure: (error) => {
+      error: (error) => {
         console.log('failed to grab queue data for customer', error);
       }
     });
