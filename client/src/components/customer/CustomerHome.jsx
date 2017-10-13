@@ -77,7 +77,7 @@ class CustomerHome extends React.Component {
   render() {
     return (
       <div className="customer-home">
-        <CustomerBanner customer={currentCustomer} />
+        <CustomerBanner customer={this.state.currentCustomer} />
         <div className="nav-bar">
           <span className={this.state.page === 'list' ? 'select' : 'unselect'} onClick={this.changePage}>List</span>
           <span className={this.state.page === 'map' ? 'select' : 'unselect'} onClick={this.changePage}>Map</span>
