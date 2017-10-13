@@ -230,6 +230,10 @@ app.put('/queues', (req, res) => {
   }
 });
 
+app.get('/user', passport.authenticate('local'), (req, res) => {
+  console.log('in user handler', req.user);
+});
+
 /* CUSTOMER endpoints */
 
 app.get(/(managerlogin)|(signup)/, (req, res) => {
