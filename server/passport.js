@@ -12,6 +12,7 @@ passport.use(new LocalStrategy(
     if (additionalLoginData.role === 'manager') {
       dbQuery.getManagerInfo(username)
         .then(user => {
+          // console.log('*** MANAGER USER:', user.dataValues);
           if (!user) {
             return done(null, false, { message: 'incorrect username' });
           }
@@ -27,8 +28,13 @@ passport.use(new LocalStrategy(
       // being used, so we probably want to switch to using User at some point
       dbQuery.getUserInfo(username)
         .then(user => {
+          // console.log('*** CUSTOMER USER:', user.dataValues.role);
           if (!user) {
             return done(null, false, { message: 'incorrect username' });
+          }
+          // only allow customers to login
+          if (user.dataValues.role !== 'customer') {
+            return done(null, false, { message: 'attempt to login with incorrect user type' });
           }
           var inputPassword = util.genPassword(password, user.passwordSalt);
           if (user.passwordHash !== inputPassword.passwordHash) {
@@ -54,7 +60,7 @@ passport.deserializeUser(function(id, done) {
     .then(user => {
       //TODO: At this point our UserProfile data is valid.
       // We need to figure out what we want to do next
-      console.log('found user: ', user);
+      console.log('found user: ', user.id);
       return done(null, user);
     })
     .catch(err => {
