@@ -264,7 +264,7 @@ app.post('/customersignup', (req, res) => {
     // so we just send the location back to the client
     res.status(201).send('/customer');
   }).catch(signupFailure => {
-    res.status(400).send('Failed to create user - username already taken');
+    res.status(400).send('Failed to create user - username already taken or invalid');
   });
 });
 
