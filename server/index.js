@@ -259,8 +259,16 @@ app.post('/customersignup', (req, res) => {
     userFormData.lastName,
     userFormData.phone,
     userFormData.email
-  );
-  res.send();
+  ).then(signupSuccess => {
+    // console.log('*** SUCCESS *** ');
+    // successful account creation
+    res.redirect('/customer');
+  }).catch(signupFailure => {
+    // console.log('*** FAILURE *** ');
+    // failed account creation
+    // TODO: we might want to do something here at some point
+    res.send();
+  });
 });
 
 //login a manager for a restaurant

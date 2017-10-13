@@ -29,7 +29,10 @@ const User = db.define('user', {
     primaryKey: true,
     autoIncrement: true
   },
-  username: Sequelize.STRING,
+  username: {
+    type: Sequelize.STRING,
+    unique: true
+  },
   passwordHash: Sequelize.STRING,
   passwordSalt: Sequelize.STRING,
   role: Sequelize.ENUM('manager', 'customer')

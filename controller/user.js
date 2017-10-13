@@ -26,7 +26,7 @@ const removeUser = function(username) {
 /* FULL USER with USERPROFILE */
 
 const addUserAndUserProfile = function(username, passwordHash, passwordSalt, role, firstName, lastName, mobile, email) {
-  UserProfile.create({
+  return UserProfile.create({
     firstName: firstName,
     lastName: lastName,
     mobile: mobile,
