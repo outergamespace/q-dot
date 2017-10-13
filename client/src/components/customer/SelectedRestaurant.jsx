@@ -14,7 +14,8 @@ class SelectedRestaurant extends React.Component {
       infoSubmitted: false,
       queueId: 0,
       queuePosition: 0,
-      ready: false
+      ready: false,
+      coordinates: {}
     };
   }
 
@@ -25,13 +26,15 @@ class SelectedRestaurant extends React.Component {
   getRestaurant() {
     let windowUrl = window.location.href;
     let id = windowUrl.slice(-1);
+    let that = this;
 
     $.ajax({
       method: 'GET',
       url: `/restaurants?restaurantId=${id}`,
       success: (data) => {
-        console.log('successfully grabbed current restaurant data', data);
-        this.setState({ currentRestaurant: data });
+        console.log('successfully grabbed current restaurant data', data.coordinates);
+        that.setState({ currentRestaurant: data });
+        that.setState({ coordinates: data.coordinates});
       },
       failure: (error) => {
         console.log('failed to grab current restaurant data', error);
@@ -56,7 +59,7 @@ class SelectedRestaurant extends React.Component {
       <div className="selected-restaurant">
         <RestaurantLogoBanner style={restaurantImg} />
         <RestaurantInformation restaurant={this.state.currentRestaurant}/>
-        <CustomerInfoForm customerInfoSubmitted={this.customerInfoSubmitted} />
+        <CustomerInfoForm customerInfoSubmitted={this.customerInfoSubmitted} selectedCoordinates={this.state.coordinates} />
       </div>
     );
   }

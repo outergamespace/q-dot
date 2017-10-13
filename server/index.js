@@ -8,12 +8,16 @@ const db = require('../database/index.js');
 const util = require('../controller/util.js');
 const dbQuery = require('../controller/index.js');
 const dbManagerQuery = require('../controller/manager.js');
+const dbUserQuery = require('../controller/user.js');
 const dummyData = require('../database/dummydata.js');
 const helpers = require('../helpers/helpers.js');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const RedisStore = require('connect-redis')(session);
 const passport = require('./passport.js');
+const yelp = require('../yelp/yelp.js');
+
+const DIST_DIR = path.resolve(__dirname, '../client/dist');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
@@ -47,7 +51,7 @@ app.get('/manager', (req, res, next) => {
   }
 });
 
-app.use(express.static(path.resolve(__dirname, '../client/dist')));
+app.use(express.static(DIST_DIR));
 
 //this shows how you can get queue information from the cookie of a customer who has already queue up
 app.use((req, res, next) => {
@@ -68,12 +72,41 @@ app.get('/', (req, res) => {
 //get info for one restaurant or all restaurants
 app.get('/restaurants', (req, res) => {
   if (req.query.restaurantId) {
-    dbQuery.findInfoForOneRestaurant(req.query.restaurantId)
-      .then(results => res.send(results))
-      .catch(error => {
-        console.log('error getting info for one restaurants', error);
-        res.send('failed for one restaurant');
-      });
+    // Get DB and Yelp data before sending response
+    Promise.all([
+      yelp.getRestaurant(req.query.restaurantId)
+        .then((yelpInfo) => { return yelpInfo; } )
+        .catch((err) => { console.log('errrrrrror: ', err); }),
+      // TODO test and if needed, handle case of Yelp unavailable
+      dbQuery.findInfoForOneRestaurant(req.query.restaurantId)
+        .then(results => {
+          //res.send(results);
+          return (results);
+        })
+        .catch(error => {
+          console.log('error getting info for one restaurants', error);
+          res.send('failed for one restaurant');
+        })
+    ])
+      .then((values) => {
+        // combine data from yelp and db into one object
+        const yelpData = values[0]; // only need some yelpData
+        const combinedData = values[1]; // Keep all the DB data
+
+        combinedData.dataValues.yelpID = yelpData.id;
+        combinedData.dataValues.yelpURL = yelpData.url;
+        combinedData.dataValues.phone = yelpData.display_phone;
+        combinedData.dataValues.categories = yelpData.categories;
+        combinedData.dataValues.rating = yelpData.rating;
+        combinedData.dataValues.location = yelpData.location;
+        combinedData.dataValues.coordinates = yelpData.coordinates;
+        combinedData.dataValues.photos = yelpData.photos;
+        combinedData.dataValues.price = yelpData.price;
+        combinedData.dataValues.hours = yelpData.hours;
+
+        res.send(combinedData);
+      })
+      .catch((err) => { console.log('errrrrrror: ', err); });
   } else {
     dbQuery.findInfoForAllRestaurants()
       .then(restaurants => res.send(restaurants))
@@ -196,6 +229,10 @@ app.put('/queues', (req, res) => {
 
 /* CUSTOMER endpoints */
 
+app.get(/(managerlogin)|(signup)/, (req, res) => {
+  res.sendFile(path.join(DIST_DIR, './managerlogin/index.html'));
+});
+
 // login a customer for a restaurant
 app.post('/customerlogin', passport.authenticate('local', { successRedirect: '/customer' }), (req, res) => {
   console.log('[CUSTOMER] LOGIN:', req.body);
@@ -204,6 +241,31 @@ app.post('/customerlogin', passport.authenticate('local', { successRedirect: '/c
 
 app.get('/customerlogout', (req, res) => {
   console.log('[CUSTOMER] LOGOUT');
+});
+
+// signup a user for the service
+app.post('/customersignup', (req, res) => {
+  console.log('[CUSTOMER] SIGNUP', req.body);
+  const userFormData = req.body;
+  const passwordInfo = util.genPassword(userFormData.password, util.genSalt());
+  // TODO: need a good place to set a const variable for this the 'customer' string value
+  const role = 'customer';
+  dbUserQuery.addUserAndUserProfile(
+    userFormData.username,
+    passwordInfo.passwordHash,
+    passwordInfo.salt,
+    role,
+    userFormData.firstName,
+    userFormData.lastName,
+    userFormData.phone,
+    userFormData.email
+  ).then(signupSuccess => {
+    // the redirect is happening on the client side via the response
+    // so we just send the location back to the client
+    res.status(201).send('/customer');
+  }).catch(signupFailure => {
+    res.status(400).send('Failed to create user - username already taken or invalid');
+  });
 });
 
 //login a manager for a restaurant
