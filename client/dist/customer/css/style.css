@@ -41,7 +41,7 @@
   font-weight: 300;
   letter-spacing: 0.3px;
 }
-.yelp-info > p:first-child {
+.yelp-info > p:first-of-type {
   margin-top: 1em;
 }
 .yelp-logo {
