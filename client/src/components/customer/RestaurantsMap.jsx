@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import GoogleMapReact from 'google-map-react';
 import QDOT_GOOGLE_API_KEY from './googleMapAPI_KEY.js'
+// import Marker from './Marker.jsx'
 
 //list view
 
@@ -23,7 +24,6 @@ import QDOT_GOOGLE_API_KEY from './googleMapAPI_KEY.js'
 // const Marker = ({ text }) => <div style={greatPlaceStyle} ><img src="http://maps.google.com/mapfiles/kml/paddle/red-circle.png"/>{text}</div>;
 // pulling png from internet, local dir not working
 // const Marker = ({ text }) => <div><img src="http://maps.google.com/mapfiles/kml/paddle/red-circle.png"/>{text}</div>;
-const K_HOVER_DISTANCE = 30;
 
 
 export default class RestaurantsMap extends Component {
@@ -35,6 +35,8 @@ export default class RestaurantsMap extends Component {
 			restaurantName: 'HEllo',
 			coordinates: [],
 		};
+	  this.jump = this.jump.bind(this);
+		this.land = this.land.bind(this);
 	}
 
 	componentDidMount() {
@@ -45,13 +47,30 @@ export default class RestaurantsMap extends Component {
 		console.log(x, y, lat, lng, event);
 	}
 
+	jump() {
+  	this.setState({style: "jumped-marker"});
+  }
+
+  land() {
+    this.setState({style: "default-marker"});
+  }
+
+  showInfo() {
+		alert('HELLOOOO');
+	}
+
   render() {
+  	//might need to have each marker be a stateful component to for them to individully jump
   	const Markers = this.state.coordinates.map((marker, index) => (
         <img
+          className={this.state.style}
           key={marker.index}
           lat={marker.lat}
           lng={marker.lng}
           src="http://maps.google.com/mapfiles/kml/paddle/red-stars.png"
+          onClick={this.showInfo} 
+          onMouseOver={this.jump}
+          onMouseLeave={this.land}
         />
       ));
 
@@ -61,7 +80,6 @@ export default class RestaurantsMap extends Component {
 						onClick={this._onClick}
 		        center={this.state.center}
 		        zoom={this.state.zoom}
-		        // hoverDistance={K_HOVER_DISTANCE}
 		        bootstrapURLKeys={{key: QDOT_GOOGLE_API_KEY}}
 						resetBoundsOnResize = {true}
 		      > 
