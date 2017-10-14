@@ -290,7 +290,7 @@ app.post('/managerlogin', passport.authenticate('local'), (req, res) => {
 });
 
 app.get('/profile', (req, res) => {
-  res.sendFile(path.join(DIST_DIR, './user/index.html'));
+  res.sendFile(path.join(DIST_DIR, './userprofile/index.html'));
 });
 
 //request for logout of manager page of a restaurant
