@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import $ from 'jquery';
+import HomeButton from './HomeButton.jsx';
 
 class Signup extends React.Component {
   constructor() {
@@ -61,6 +62,7 @@ class Signup extends React.Component {
     return (
       <div className='container'>
         <div className='form-signin'>
+          <HomeButton />
           <h2 className='form-signin-heading'>Sign up</h2>
           <label className='sr-only'>Username</label>
           <input
