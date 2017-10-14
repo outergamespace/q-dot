@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import GoogleMapReact from 'google-map-react';
 import QDOT_GOOGLE_API_KEY from './googleMapAPI_KEY.js'
 
+
+
 // const greatPlaceStyle = {
 //   position: 'absolute',
 //   width: 40,
@@ -28,8 +30,11 @@ export default class GoogleMap extends Component {
 		this.state = {
 			center: {lat: 37.7749, lng: -122.4194},
 			zoom: 13,
-			restaurantName: ''
+			restaurantName: '',
+			style: 'default-marker'
 		}
+		this.jump = this.jump.bind(this);
+		this.land = this.land.bind(this);
 	}
 
 	componentDidMount() {
@@ -40,6 +45,14 @@ export default class GoogleMap extends Component {
 	_onClick ({x, y, lat, lng, event}) {
 		console.log(x, y, lat, lng, event)
 	}
+
+  jump() {
+  	this.setState({style: "jumped-marker"});
+  }
+
+  land() {
+    this.setState({style: "default-marker"});
+  }
 
   render() {
   	{console.log(this.props)}
@@ -52,12 +65,15 @@ export default class GoogleMap extends Component {
 		        zoom={this.state.zoom}
 						resetBoundsOnResize = {true}
 		      >
-          <img position="absolute"
+          <img className={this.state.style}
+          position="absolute"
           lat={this.props.coordinates.latitude}
           lng={this.props.coordinates.longitude}
           text={this.state.restaurantName}
-          src="http://maps.google.com/mapfiles/kml/paddle/red-stars.png"/>
-
+          src="/icons/red-stars.png"
+          onClick={this.showInfo} 
+          onMouseOver={this.jump}
+          onMouseLeave={this.land}/>
 		      </GoogleMapReact>
 				</div>
 

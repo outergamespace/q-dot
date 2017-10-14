@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import GoogleMapReact from 'google-map-react';
 import QDOT_GOOGLE_API_KEY from './googleMapAPI_KEY.js'
-// import Marker from './Marker.jsx'
 
 //list view
 
@@ -32,11 +31,13 @@ export default class RestaurantsMap extends Component {
 		this.state = {
 			center: {lat: 37.7749, lng: -122.4248931640625},
 			zoom: 12,
-			restaurantName: 'HEllo',
+			restaurantName: '',
+			information: false,
 			coordinates: [],
 		};
 	  this.jump = this.jump.bind(this);
 		this.land = this.land.bind(this);
+		this.showInfo = this.showInfo.bind(this);
 	}
 
 	componentDidMount() {
@@ -47,16 +48,21 @@ export default class RestaurantsMap extends Component {
 		console.log(x, y, lat, lng, event);
 	}
 
-	jump() {
+	jump(text) {
+		console.log(text);
   	this.setState({style: "jumped-marker"});
   }
 
-  land() {
+  land(text) {
+  	console.log(text);
     this.setState({style: "default-marker"});
   }
 
-  showInfo() {
-		alert('HELLOOOO');
+  showInfo(text) {
+  	this.setState({restaurantName: text});
+  	this.state.information === false
+    ? this.setState({ information: true })
+    : this.setState({ information: false })
 	}
 
   render() {
@@ -67,10 +73,10 @@ export default class RestaurantsMap extends Component {
           key={marker.index}
           lat={marker.lat}
           lng={marker.lng}
-          src="http://maps.google.com/mapfiles/kml/paddle/red-stars.png"
-          onClick={this.showInfo} 
-          onMouseOver={this.jump}
-          onMouseLeave={this.land}
+          src="/icons/red-stars.png"
+          onClick={(e) => this.showInfo(marker.name, e)} 
+          onMouseOver={this.jump.bind(this, marker.name)}
+          onMouseLeave={this.land.bind(this, marker.name)}
         />
       ));
 
@@ -84,11 +90,20 @@ export default class RestaurantsMap extends Component {
 						resetBoundsOnResize = {true}
 		      > 
 		      {Markers}
+		      {this.state.information === true
+	        ? <div>
+		        	<div class="row">
+					      <div class="col s12 m2">
+					        <div class="card-panel teal">
+					          <span class="white-text">{this.state.restaurantName}
+					          </span>
+					        </div>
+					      </div>
+					    </div>
+	          </div>
+	        : null}
         </GoogleMapReact>
       </div>
     );
   }
 }
-
-
-
