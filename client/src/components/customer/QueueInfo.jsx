@@ -50,6 +50,7 @@ class QueueInfo extends React.Component {
   render() {
     return (
       <div className="customer-queue-info-container">
+        <CustomerNav />
         <CustomerBanner customer={this.state.currentCustomer}/>
         <h5>YOUR QUEUE NUMBER IS</h5>
         {
