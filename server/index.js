@@ -293,31 +293,35 @@ app.post('/managerlogin', passport.authenticate('local'), (req, res) => {
 // TODO: maybe change this to managerlogout or have a shared logout for both
 // manager and customer
 app.get('/logout', (req, res) => {
-  const userProfileData = req.user.dataValues;
-  // handle special logout procedures depending on user role
-  dbQuery.getUserInfoById(userProfileData.id)
-    .then(userProfile => {
-      if (userProfile.role === 'manager') {
-        dbManagerQuery.addAuditHistory('LOGOUT', req.user.id)
-          .then(results => {
-            req.logout();
-            res.redirect('/managerlogin');
-          });
-      } else if (userProfile.role === 'customer') {
-        // TODO: check this when we have a customerlogout
-        // is this necessary? and why?
-        req.logout();
-        // should we redirect to the HOME page instead?
-        res.redirect('/customer');
-      } else {
-        // unrecognized user role
-        res.sendStatus(400);
-      }
-    })
-    .catch(error => {
-      // error fetching userProfile data
-      res.sendStatus(500);
-    });
+  if (req.user) {
+    const userProfileData = req.user.dataValues;
+    // handle special logout procedures depending on user role
+    dbQuery.getUserInfoById(userProfileData.id)
+      .then(userProfile => {
+        if (userProfile.role === 'manager') {
+          dbManagerQuery.addAuditHistory('LOGOUT', req.user.id)
+            .then(results => {
+              req.logout();
+              res.redirect('/managerlogin');
+            });
+        } else if (userProfile.role === 'customer') {
+          // TODO: check this when we have a customerlogout
+          // is this necessary? and why?
+          req.logout();
+          // should we redirect to the HOME page instead?
+          res.redirect('/customer');
+        } else {
+          // unrecognized user role
+          res.sendStatus(400);
+        }
+      })
+      .catch(error => {
+        // error fetching userProfile data
+        res.sendStatus(500);
+      });
+    } else {
+      res.redirect('/customer');
+    }
 });
 
 //add a new manager login for a restaurant
