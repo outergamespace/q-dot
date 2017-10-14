@@ -29,7 +29,7 @@ export default class GoogleMap extends Component {
 			center: {lat: 37.7749, lng: -122.4194},
 			zoom: 13,
 			restaurantName: '',
-      currentLocation: {lat: 37.7749, lng: -123.4194}
+      currentLocation: {lat: 0, lng: 0}
 		};
     this.getUserLocation = this.getUserLocation.bind(this);
 	}
@@ -50,8 +50,7 @@ export default class GoogleMap extends Component {
           lat: position.coords.latitude,
           lng: position.coords.longitude
         }; 
-        this.setState({currentLocation: { lat: userPosition.lat, lng: userPosition.lng }});
-        console.log('USERRRRR ', this, userPosition.lat, userPosition.lng); 
+        this.setState({currentLocation: { lat: userPosition.lat, lng: userPosition.lng }}); 
         return userPosition;
       }); 
     }
@@ -74,12 +73,12 @@ export default class GoogleMap extends Component {
           src="http://maps.google.com/mapfiles/kml/paddle/red-stars.png"/>
 
           <img position="absolute"
-            height="33"
-            width="33"
+            height="40"
+            width="40"
             lat={this.state.currentLocation.lat}
             lng={this.state.currentLocation.lng}
             text="You are Here"
-            src="http://maps.google.com/mapfiles/kml/paddle/red-stars.png"/>
+            src="http://maps.google.com/mapfiles/arrow.png"/>
 
 		      </GoogleMapReact>
 				</div>
