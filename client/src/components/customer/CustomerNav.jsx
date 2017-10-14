@@ -46,8 +46,6 @@ class CustomerNav extends React.Component {
           <li className="divider"></li>
           <li><a href="/signup">signup</a></li>
           <li className="divider"></li>
-          <li><a href="/profile">profile</a></li>
-          <li className="divider"></li>
           <li><a href="/managerlogin">login</a></li>
         </ul>
       );
