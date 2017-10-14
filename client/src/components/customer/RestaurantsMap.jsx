@@ -111,7 +111,7 @@ export default class RestaurantsMap extends Component {
 		      {this.state.information === true
 	        ? <div className="information-box">
   	        	<div class="row">
-  				      <div class="col s12 m2">
+  				      <div class="col s6 m2">
   				        <div class="card-panel-custom blue-grey darken-2">
   				          <span class="white-text-title-custom">{this.state.restaurantName}</span>
                     <br/>
