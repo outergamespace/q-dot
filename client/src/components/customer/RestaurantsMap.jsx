@@ -34,16 +34,32 @@ export default class RestaurantsMap extends Component {
 			zoom: 12,
 			restaurantName: 'HEllo',
 			coordinates: [],
+      currentLocation: {lat: 0, lng: 0},
 		};
+    this.getUserLocation = this.getUserLocation.bind(this);
 	}
 
 	componentDidMount() {
 		this.setState({coordinates: this.props.coordinates});
+    this.getUserLocation();
 	}
 
 	_onClick ({x, y, lat, lng, event}) {
 		console.log(x, y, lat, lng, event);
 	}
+
+  getUserLocation() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        let userPosition = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        }; 
+        this.setState({currentLocation: { lat: userPosition.lat, lng: userPosition.lng }}); 
+        return userPosition;
+      }); 
+    }
+  }
 
   render() {
   	const Markers = this.state.coordinates.map((marker, index) => (
@@ -66,6 +82,13 @@ export default class RestaurantsMap extends Component {
 						resetBoundsOnResize = {true}
 		      > 
 		      {Markers}
+          <img position="absolute"
+            height="40"
+            width="40"
+            lat={this.state.currentLocation.lat}
+            lng={this.state.currentLocation.lng}
+            text="You are Here"
+            src="http://maps.google.com/mapfiles/arrow.png"/>
         </GoogleMapReact>
       </div>
     );

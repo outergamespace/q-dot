@@ -28,19 +28,33 @@ export default class GoogleMap extends Component {
 		this.state = {
 			center: {lat: 37.7749, lng: -122.4194},
 			zoom: 13,
-			restaurantName: ''
-		}
+			restaurantName: '',
+      currentLocation: {lat: 0, lng: 0}
+		};
+    this.getUserLocation = this.getUserLocation.bind(this);
 	}
 
 	componentDidMount() {
 		console.log('coordinates',this.props.coordinates);
-		// this.setState({center: {lat: this.props.coordinates.latitude, lng: this.props.coordinates.longitude}});
+    this.getUserLocation();
 	}
 
 	_onClick ({x, y, lat, lng, event}) {
 		console.log(x, y, lat, lng, event)
 	}
 
+  getUserLocation() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        let userPosition = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        }; 
+        this.setState({currentLocation: { lat: userPosition.lat, lng: userPosition.lng }}); 
+        return userPosition;
+      }); 
+    }
+  }
   render() {
   	{console.log(this.props)}
     return (
@@ -57,6 +71,14 @@ export default class GoogleMap extends Component {
           lng={this.props.coordinates.longitude}
           text={this.state.restaurantName}
           src="http://maps.google.com/mapfiles/kml/paddle/red-stars.png"/>
+
+          <img position="absolute"
+            height="40"
+            width="40"
+            lat={this.state.currentLocation.lat}
+            lng={this.state.currentLocation.lng}
+            text="You are Here"
+            src="http://maps.google.com/mapfiles/arrow.png"/>
 
 		      </GoogleMapReact>
 				</div>
