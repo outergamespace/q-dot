@@ -10,7 +10,7 @@ const CustomerMain = () => (
       <Route exact path={'/customer'} component={CustomerHome}/>
       <Route path={'/restaurant'} component={SelectedRestaurant}/>
     </Switch>
-  </main> 
-)
+  </main>
+);
 
 export default CustomerMain;

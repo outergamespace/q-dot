@@ -18,11 +18,11 @@ const CustomerBanner = ({ customer }) => {
         <p className="banner-title">{welcomeMessage}</p>
         {queueMessage}
       </div>
-     <div className="date-container">
-       <p className="date-info">Today is {date_now}</p>
-     </div>
+      <div className="date-container">
+        <p className="date-info">Today is {date_now}</p>
+      </div>
     </div>
-  )
+  );
 };
 
 export default CustomerBanner;

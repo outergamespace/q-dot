@@ -8,7 +8,8 @@ const config = {
     customerApp: path.resolve(__dirname, 'client/src/customerIndex.jsx'),
     queueinfo: path.resolve(__dirname, 'client/src/queueinfoIndex.jsx'),
     managerApp: path.resolve(__dirname, 'client/src/managerIndex.jsx'),
-    auth: path.resolve(__dirname, 'client/src/authIndex.jsx')
+    auth: path.resolve(__dirname, 'client/src/authIndex.jsx'),
+    userprofile: path.resolve(__dirname, 'client/src/userProfileIndex.jsx')
   },
   output: {
     path: path.resolve(__dirname, 'client/dist/js'),
