@@ -6,7 +6,7 @@ const CustomerNav = () => (
     <ul id="dropdown1" className="dropdown-content">
       <li><a href="/">home</a></li>
       <li className="divider"></li>
-      <li><a href="/signup">join</a></li>
+      <li><a href="/signup">signup</a></li>
       <li className="divider"></li>
       <li><a href="/managerlogin">login</a></li>
       <li className="divider"></li>
