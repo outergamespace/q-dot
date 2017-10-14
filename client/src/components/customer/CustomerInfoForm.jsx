@@ -59,7 +59,7 @@ class CustomerInfoForm extends React.Component {
   render() {
     return (
       <div>
-        <div className="customer-info-input-container">
+        <div className="customer-info-input-container row">
           <div className="input-field col s6">
             <GroupSizeSelector getGroupSize={this.getGroupSize}/>
           </div>

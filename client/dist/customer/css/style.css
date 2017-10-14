@@ -41,11 +41,22 @@
   font-weight: 300;
   letter-spacing: 0.3px;
 }
-.yelp-info > p:first-child {
+.yelp-info > p:first-of-type {
   margin-top: 1em;
 }
 .yelp-logo {
   float: right;
   max-width: 100px;
   margin-top: -15px;
+}
+.customer-group-selector-container .select-wrapper .no-top-margin {
+  margin-top: 0;
+  min-width: 150px;
+  height: 36px;
+  margin-left: 0px;
+  padding-left: 0px;
+}
+customer-info-input-container {
+  margin-left: 0px;
+  width: 95%;
 }

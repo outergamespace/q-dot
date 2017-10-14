@@ -23,7 +23,7 @@ class GroupSizeSelector extends React.Component {
     return (
       <div className="customer-group-selector-container">
         <div className="select-wrapper">
-          <select className="browser-default" value={this.state.currentGroupSize} onChange={this.getGroupSize} required>
+          <select className="browser-default no-top-margin" value={this.state.currentGroupSize} onChange={this.getGroupSize} required>
             <option value="Select your group size" disabled>Select group size</option>
             <option value="1">1</option>
             <option value="2">2</option>
