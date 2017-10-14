@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import $ from 'jquery';
 import '../../../dist/managerlogin/styles.css';
+import CustomerNav from '../customer/CustomerNav.jsx';
 
 class ManagerLogin extends React.Component {
   constructor(props) {
@@ -57,6 +58,7 @@ class ManagerLogin extends React.Component {
     return (
       <div className='container'>
         <div className='form-signin'>
+        <button className='btn btn-lg btn-primary btn-block'><span className="bigger">q.</span> Home</button>
           <h2 className='form-signin-heading'>Please sign in</h2>
           <label className='sr-only'>Username</label>
           <input
