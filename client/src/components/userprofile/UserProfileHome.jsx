@@ -19,8 +19,8 @@ const UserProfileHome = (props) => {
     props.user.profilePicture : DEFAULT_PROFILE_IMAGE_URL;
 
   return (
-    <div className="container user-profile-home">
-      <div className="user-profile-home-avatar section">
+    <div className="container user-profile-home card-panel">
+      <div className="user-profile-home-avatar">
         <img src="/images/userprofile/orly_owl_avatar_medium.png" />
       </div>
       <div className="user-profile-home-details">
