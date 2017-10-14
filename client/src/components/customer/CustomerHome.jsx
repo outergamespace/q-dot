@@ -14,16 +14,16 @@ class CustomerHome extends React.Component {
       selectRestaurant: false,
       currentRestaurant: {},
       restaurantList: [],
-      coordinates: [
-                    {lat: 37.79338, lng:-122.4225, name: "House of Prime Rib"}, 
-                    {lat: 37.7812215727578, lng:-122.40627989109, name: "Tempest"},
-                    {lat: 37.7602179, lng: -122.4110749, name: "Farmhouse Kitchen"},
-                    {lat: 37.774905, lng: -122.437506, name: "Nopa"},
-                    {lat: 37.782787322998, lng: -122.462539672852, name: "Burma Superstar"},
-                    {lat: 37.78374, lng: -122.433005, name: "State Bird Provisions"},
-                    {lat: 37.7642352, lng: -122.4306936, name: "Kitchen Story"},
-                    {lat: 37.7769872, lng: -122.4385184, name: "Tsunami Panhandle"},
-                    {lat: 37.7570666079255, lng: -122.416596234642, name: "Limon Rotisserie"}
+      restaurantInfo: [
+                    {lat: 37.79338, lng:-122.4225, name: "House of Prime Rib", wait: "40 min"}, 
+                    {lat: 37.7812215727578, lng:-122.40627989109, name: "Tempest", wait: "50 min"},
+                    {lat: 37.7602179, lng: -122.4110749, name: "Farmhouse Kitchen", wait: "15 min"},
+                    {lat: 37.774905, lng: -122.437506, name: "Nopa", wait: "20 min"},
+                    {lat: 37.782787322998, lng: -122.462539672852, name: "Burma Superstar", wait: "0 min"},
+                    {lat: 37.78374, lng: -122.433005, name: "State Bird Provisions", wait: "0 min"},
+                    {lat: 37.7642352, lng: -122.4306936, name: "Kitchen Story", wait: "0 min"},
+                    {lat: 37.7769872, lng: -122.4385184, name: "Tsunami Panhandle", wait: "0 min"},
+                    {lat: 37.7570666079255, lng: -122.416596234642, name: "Limon Rotisserie", wait: "0 min"}
                    ],
       page: 'list',
       currentCustomer: null,
@@ -91,7 +91,7 @@ class CustomerHome extends React.Component {
               </div>
             ))}
           </div>
-        : <RestaurantsMap coordinates={this.state.coordinates}/>}
+        : <RestaurantsMap restaurantInfo={this.state.restaurantInfo}/>}
       </div>
     );
   }

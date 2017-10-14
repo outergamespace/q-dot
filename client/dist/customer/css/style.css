@@ -10,12 +10,33 @@
   padding-left: 40px;
 }
 
-/*.box {
-  background-image: linear-gradient(rgba(255,255,255,.5), rgba(255,255,255,0));
-}*/
+.information-box {
+  width: 100%;
+  position: relative;
+}
 
-.default-marker {
+.white-text-title-custom {
+  color: #FFFFFF !important;
+  font-weight: bold;
+  font-size: 16px;
+  font-size-adjust: 100%;
+}
 
+.white-text-custom {
+  color: #FFFFFF !important;
+  font-size: 14px;
+}
+
+.card-panel-custom {
+  -webkit-transition: -webkit-box-shadow .25s;
+  transition: -webkit-box-shadow .25s;
+  transition: box-shadow .25s;
+  transition: box-shadow .25s, -webkit-box-shadow .25s;
+  text-align: center;
+  padding: 24px;
+  margin: 0.5rem 0 1rem 0;
+  border-radius: 2px;
+  background-color: #fff;
 }
 
 .jumped-marker {

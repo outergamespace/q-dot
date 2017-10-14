@@ -32,16 +32,20 @@ export default class RestaurantsMap extends Component {
 			center: {lat: 37.7749, lng: -122.4248931640625},
 			zoom: 12,
 			restaurantName: '',
+      waitTime: '',
 			information: false,
-			coordinates: [],
+			restaurantInfo: [],
+      currentLocation: {lat: 0, lng: 0},
 		};
 	  this.jump = this.jump.bind(this);
 		this.land = this.land.bind(this);
 		this.showInfo = this.showInfo.bind(this);
+    this.getUserLocation = this.getUserLocation.bind(this);
 	}
 
 	componentDidMount() {
-		this.setState({coordinates: this.props.coordinates});
+		this.setState({restaurantInfo: this.props.restaurantInfo});
+    this.getUserLocation();
 	}
 
 	_onClick ({x, y, lat, lng, event}) {
@@ -58,23 +62,37 @@ export default class RestaurantsMap extends Component {
     this.setState({style: "default-marker"});
   }
 
-  showInfo(text) {
+  showInfo(text, time) {
   	this.setState({restaurantName: text});
+    this.setState({waitTime: time})
   	this.state.information === false
     ? this.setState({ information: true })
     : this.setState({ information: false })
 	}
 
+  getUserLocation() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        let userPosition = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        }; 
+        this.setState({currentLocation: { lat: userPosition.lat, lng: userPosition.lng }}); 
+        return userPosition;
+      }); 
+    }
+  }
+
   render() {
   	//might need to have each marker be a stateful component to for them to individully jump
-  	const Markers = this.state.coordinates.map((marker, index) => (
+  	const Markers = this.state.restaurantInfo.map((marker, index) => (
         <img
           className={this.state.style}
           key={marker.index}
           lat={marker.lat}
           lng={marker.lng}
           src="/icons/red-stars.png"
-          onClick={(e) => this.showInfo(marker.name, e)} 
+          onClick={(e) => this.showInfo(marker.name, marker.wait, e)} 
           onMouseOver={this.jump.bind(this, marker.name)}
           onMouseLeave={this.land.bind(this, marker.name)}
         />
@@ -91,17 +109,27 @@ export default class RestaurantsMap extends Component {
 		      > 
 		      {Markers}
 		      {this.state.information === true
-	        ? <div>
-		        	<div class="row">
-					      <div class="col s12 m2">
-					        <div class="card-panel teal">
-					          <span class="white-text">{this.state.restaurantName}
-					          </span>
-					        </div>
-					      </div>
-					    </div>
-	          </div>
+
+	        ? <div className="information-box">
+  	        	<div class="row">
+  				      <div class="col s12 m2">
+  				        <div class="card-panel-custom blue-grey darken-2">
+  				          <span class="white-text-title-custom">{this.state.restaurantName}</span>
+                    <br/>
+                    <br/>
+                    <span class="white-text-custom">{"Wait time: "}{this.state.waitTime}</span>
+  				        </div>
+  				      </div>
+  				    </div>
+            </div>
 	        : null}
+          <img position="absolute"
+            height="40"
+            width="40"
+            lat={this.state.currentLocation.lat}
+            lng={this.state.currentLocation.lng}
+            text="You are Here"
+            src="http://maps.google.com/mapfiles/arrow.png"/>
         </GoogleMapReact>
       </div>
     );
