@@ -13,7 +13,7 @@ const CustomerBanner = ({ customer }) => {
   let date_now = (curr_date + ' ' + months[curr_month]);
 
   return (
-    <div className="gradient-banner-container">
+    <div className="gradient-banner-container-custom">
       <div className="banner-content">
         <p className="banner-title">{welcomeMessage}</p>
         {queueMessage}

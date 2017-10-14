@@ -23,7 +23,6 @@ import QDOT_GOOGLE_API_KEY from './googleMapAPI_KEY.js'
 // const Marker = ({ text }) => <div style={greatPlaceStyle} ><img src="http://maps.google.com/mapfiles/kml/paddle/red-circle.png"/>{text}</div>;
 // pulling png from internet, local dir not working
 // const Marker = ({ text }) => <div><img src="http://maps.google.com/mapfiles/kml/paddle/red-circle.png"/>{text}</div>;
-const K_HOVER_DISTANCE = 30;
 
 
 export default class RestaurantsMap extends Component {
@@ -32,10 +31,14 @@ export default class RestaurantsMap extends Component {
 		this.state = {
 			center: {lat: 37.7749, lng: -122.4248931640625},
 			zoom: 12,
-			restaurantName: 'HEllo',
+			restaurantName: '',
+			information: false,
 			coordinates: [],
       currentLocation: {lat: 0, lng: 0},
 		};
+	  this.jump = this.jump.bind(this);
+		this.land = this.land.bind(this);
+		this.showInfo = this.showInfo.bind(this);
     this.getUserLocation = this.getUserLocation.bind(this);
 	}
 
@@ -46,6 +49,23 @@ export default class RestaurantsMap extends Component {
 
 	_onClick ({x, y, lat, lng, event}) {
 		console.log(x, y, lat, lng, event);
+	}
+
+	jump(text) {
+		console.log(text);
+  	this.setState({style: "jumped-marker"});
+  }
+
+  land(text) {
+  	console.log(text);
+    this.setState({style: "default-marker"});
+  }
+
+  showInfo(text) {
+  	this.setState({restaurantName: text});
+  	this.state.information === false
+    ? this.setState({ information: true })
+    : this.setState({ information: false })
 	}
 
   getUserLocation() {
@@ -62,12 +82,17 @@ export default class RestaurantsMap extends Component {
   }
 
   render() {
+  	//might need to have each marker be a stateful component to for them to individully jump
   	const Markers = this.state.coordinates.map((marker, index) => (
         <img
+          className={this.state.style}
           key={marker.index}
           lat={marker.lat}
           lng={marker.lng}
-          src="http://maps.google.com/mapfiles/kml/paddle/red-stars.png"
+          src="/icons/red-stars.png"
+          onClick={(e) => this.showInfo(marker.name, e)} 
+          onMouseOver={this.jump.bind(this, marker.name)}
+          onMouseLeave={this.land.bind(this, marker.name)}
         />
       ));
 
@@ -77,11 +102,22 @@ export default class RestaurantsMap extends Component {
 						onClick={this._onClick}
 		        center={this.state.center}
 		        zoom={this.state.zoom}
-		        // hoverDistance={K_HOVER_DISTANCE}
 		        bootstrapURLKeys={{key: QDOT_GOOGLE_API_KEY}}
 						resetBoundsOnResize = {true}
 		      > 
 		      {Markers}
+		      {this.state.information === true
+	        ? <div>
+		        	<div class="row">
+					      <div class="col s12 m2">
+					        <div class="card-panel teal">
+					          <span class="white-text">{this.state.restaurantName}
+					          </span>
+					        </div>
+					      </div>
+					    </div>
+	          </div>
+	        : null}
           <img position="absolute"
             height="40"
             width="40"
@@ -94,6 +130,3 @@ export default class RestaurantsMap extends Component {
     );
   }
 }
-
-
-
