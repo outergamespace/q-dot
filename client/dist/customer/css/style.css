@@ -84,6 +84,17 @@
   margin-left: 0px;
   padding-left: 0px;
 }
+
+.user-profile-home-avatar {
+  float: left;
+  display: inline-block;
+  margin-right: 16px;
+}
+
+.user-profile-home-details {
+  display: inline-block;
+}
+
 customer-info-input-container {
   margin-left: 0px;
   width: 95%;
