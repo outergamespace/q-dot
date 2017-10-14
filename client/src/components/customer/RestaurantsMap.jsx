@@ -109,7 +109,6 @@ export default class RestaurantsMap extends Component {
 		      > 
 		      {Markers}
 		      {this.state.information === true
-
 	        ? <div className="information-box">
   	        	<div class="row">
   				      <div class="col s12 m2">

@@ -32,7 +32,7 @@ export default class GoogleMap extends Component {
 			zoom: 13,
 			restaurantName: '',
 			style: 'default-marker',
-			currentLocation: {lat: 0, lng: 0}
+      currentLocation: {lat: 0, lng: 0}
 		}
 		this.jump = this.jump.bind(this);
 		this.land = this.land.bind(this);
