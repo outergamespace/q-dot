@@ -289,6 +289,10 @@ app.post('/managerlogin', passport.authenticate('local'), (req, res) => {
     .then(results => res.send('/manager'));
 });
 
+app.get('/profile', (req, res) => {
+  res.sendFile(path.join(DIST_DIR, './userprofile/index.html'));
+});
+
 //request for logout of manager page of a restaurant
 // TODO: maybe change this to managerlogout or have a shared logout for both
 // manager and customer
