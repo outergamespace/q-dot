@@ -40,7 +40,7 @@ class CustomerNav extends React.Component {
     } else {
       menu = (
         <ul id="dropdown1" className="dropdown-content">
-          <li><a href="/">home</a></li>
+          <li className=""><a href="/">home</a></li>
           <li className="divider"></li>
           <li><a href="/signup">signup</a></li>
           <li className="divider"></li>
@@ -54,7 +54,7 @@ class CustomerNav extends React.Component {
         {menu}
         <nav>
           <div className="nav-wrapper">
-            <ul className="nav-mobile">
+            <ul className="nav-mobile dropdown">
               <li><a className="dropdown-button" href="#!" data-activates="dropdown1">q.<i className="material-icons right">arrow_drop_down</i></a></li>
             </ul>
           </div>
