@@ -89,7 +89,6 @@ export default class GoogleMap extends Component {
           onClick={this.showInfo} 
           onMouseOver={this.jump}
           onMouseLeave={this.land}/>
-          src="http://maps.google.com/mapfiles/kml/paddle/red-stars.png"/>
 
           <img position="absolute"
             height="40"

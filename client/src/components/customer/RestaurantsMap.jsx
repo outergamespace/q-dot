@@ -32,8 +32,9 @@ export default class RestaurantsMap extends Component {
 			center: {lat: 37.7749, lng: -122.4248931640625},
 			zoom: 12,
 			restaurantName: '',
+      waitTime: '',
 			information: false,
-			coordinates: [],
+			restaurantInfo: [],
       currentLocation: {lat: 0, lng: 0},
 		};
 	  this.jump = this.jump.bind(this);
@@ -43,7 +44,7 @@ export default class RestaurantsMap extends Component {
 	}
 
 	componentDidMount() {
-		this.setState({coordinates: this.props.coordinates});
+		this.setState({restaurantInfo: this.props.restaurantInfo});
     this.getUserLocation();
 	}
 
@@ -61,8 +62,9 @@ export default class RestaurantsMap extends Component {
     this.setState({style: "default-marker"});
   }
 
-  showInfo(text) {
+  showInfo(text, time) {
   	this.setState({restaurantName: text});
+    this.setState({waitTime: time})
   	this.state.information === false
     ? this.setState({ information: true })
     : this.setState({ information: false })
@@ -83,14 +85,14 @@ export default class RestaurantsMap extends Component {
 
   render() {
   	//might need to have each marker be a stateful component to for them to individully jump
-  	const Markers = this.state.coordinates.map((marker, index) => (
+  	const Markers = this.state.restaurantInfo.map((marker, index) => (
         <img
           className={this.state.style}
           key={marker.index}
           lat={marker.lat}
           lng={marker.lng}
           src="/icons/red-stars.png"
-          onClick={(e) => this.showInfo(marker.name, e)} 
+          onClick={(e) => this.showInfo(marker.name, marker.wait, e)} 
           onMouseOver={this.jump.bind(this, marker.name)}
           onMouseLeave={this.land.bind(this, marker.name)}
         />
@@ -107,16 +109,18 @@ export default class RestaurantsMap extends Component {
 		      > 
 		      {Markers}
 		      {this.state.information === true
-	        ? <div>
-		        	<div class="row">
-					      <div class="col s12 m2">
-					        <div class="card-panel teal">
-					          <span class="white-text">{this.state.restaurantName}
-					          </span>
-					        </div>
-					      </div>
-					    </div>
-	          </div>
+	        ? <div className="information-box">
+  	        	<div class="row">
+  				      <div class="col s6 m2">
+  				        <div class="card-panel-custom blue-grey darken-2">
+  				          <span class="white-text-title-custom">{this.state.restaurantName}</span>
+                    <br/>
+                    <br/>
+                    <span class="white-text-custom">{"Wait time: "}{this.state.waitTime}</span>
+  				        </div>
+  				      </div>
+  				    </div>
+            </div>
 	        : null}
           <img position="absolute"
             height="40"
