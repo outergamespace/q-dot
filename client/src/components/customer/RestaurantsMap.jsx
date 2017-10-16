@@ -40,6 +40,7 @@ export default class RestaurantsMap extends Component {
 	  this.jump = this.jump.bind(this);
 		this.land = this.land.bind(this);
 		this.showInfo = this.showInfo.bind(this);
+    this.hideInfo = this.hideInfo.bind(this);
     this.getUserLocation = this.getUserLocation.bind(this);
 	}
 
@@ -65,10 +66,14 @@ export default class RestaurantsMap extends Component {
   showInfo(text, time) {
   	this.setState({restaurantName: text});
     this.setState({waitTime: time})
-  	this.state.information === false
-    ? this.setState({ information: true })
-    : this.setState({ information: false })
+  	if (this.state.information === false) {
+      this.setState({ information: true })
+    } 
 	}
+
+  hideInfo() {
+    this.setState({ information: false })
+  }
 
   getUserLocation() {
     if (navigator.geolocation) {
@@ -99,7 +104,7 @@ export default class RestaurantsMap extends Component {
       ));
 
     return (
-      <div className="restaurant-map" >
+      <div className="restaurant-map">
  				<GoogleMapReact
 						onClick={this._onClick}
 		        center={this.state.center}
@@ -109,10 +114,12 @@ export default class RestaurantsMap extends Component {
 		      > 
 		      {Markers}
 		      {this.state.information === true
-	        ? <div className="information-box">
-  	        	<div class="row">
+	        ? <div className="information-box" onClick={(e) => this.hideInfo(e)}>
+  	        	<div class="row"> 
   				      <div class="col s6 m2">
   				        <div class="card-panel-custom blue-grey darken-2">
+                    <div class="white-text-close-custom">x</div>
+                    <br/>
   				          <span class="white-text-title-custom">{this.state.restaurantName}</span>
                     <br/>
                     <br/>
