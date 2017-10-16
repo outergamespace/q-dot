@@ -104,7 +104,7 @@ export default class RestaurantsMap extends Component {
       ));
 
     return (
-      <div className="restaurant-map"s>
+      <div className="restaurant-map">
  				<GoogleMapReact
 						onClick={this._onClick}
 		        center={this.state.center}
