@@ -2834,11 +2834,11 @@ ul.staggered-list li {
 }
 
 /*uncommenting this will result in an unresponsive nav bar*/
-/*@media only screen and (max-width: 992px) {
+@media only screen and (max-width: 992px) {
   .hide-on-med-and-down {
     display: none !important;
   }
-}*/
+}
 
 @media only screen and (min-width: 601px) {
   .hide-on-med-and-up {
