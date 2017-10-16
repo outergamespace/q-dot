@@ -36,7 +36,7 @@ class CustomerNav extends React.Component {
           <li className="divider"></li>
           <li><a href="/profile">profile</a></li>
           <li className="divider"></li>
-          <li><a href="/logout">logout</a></li>;
+          <li><a href="/logout">logout</a></li>
         </ul>
       );
     } else {
