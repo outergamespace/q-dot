@@ -25,19 +25,22 @@ const UserProfileHome = (props) => {
       </div>
       <div className="user-profile-home-details">
         <div className="section">
-          <h5>First Name:</h5>
+          <h5 className="teal-text">First Name:</h5>
           <p>{firstName}</p>
         </div>
+        <div class="divider"></div>
         <div className="section">
-          <h5>Last Name:</h5>
+          <h5 className="teal-text">Last Name:</h5>
           <p>{lastName}</p>
         </div>
+        <div class="divider"></div>
         <div className="section">
-          <h5>Phone Number:</h5>
+          <h5 className="teal-text">Phone Number:</h5>
           <p>{mobile}</p>
         </div>
+        <div class="divider"></div>
         <div className="section">
-          <h5>Email:</h5>
+          <h5 className="teal-text">Email:</h5>
           <p>{email}</p>
         </div>
       </div>
