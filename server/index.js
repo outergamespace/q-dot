@@ -276,7 +276,13 @@ app.post('/customersignup', (req, res) => {
   ).then(signupSuccess => {
     // the redirect is happening on the client side via the response
     // so we just send the location back to the client
-    res.status(201).send('/customer');
+    req.login(signupSuccess.user, (err) => {
+      if (err) {
+        throw err;
+      } else {
+        res.status(201).send('/customer');
+      }
+    })
   }).catch(signupFailure => {
     res.status(400).send('Failed to create user - username already taken or invalid');
   });
